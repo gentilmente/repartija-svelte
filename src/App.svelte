@@ -1,19 +1,12 @@
 <script>
-	let count = 0;
-	export let name;
-	function handleClick() {
-		count +=1;
-	}
+	import Start from '/Start.svelte';
 </script>
 
-<button on:click={handleClick}>
-	Clicked {count} {count === 1 ? 'time' : 'times'}
-</button>
-
 <main>
-	<h1>Hello {name} {count} {count === 1 ? 'time' : 'times'}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<h1><a href='/'>Repartija</a></h1>
+	<p class="subtitle">No mas ebrios haciendo cuentas</p>
 </main>
+<Start/>
 
 <style>
 	main {
