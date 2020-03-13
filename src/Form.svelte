@@ -1,0 +1,28 @@
+<form action='/form' method='POST'>
+  <div class="forma">
+    <div>
+      <input type='text' name ='user_name' placeholder='Nombre'>
+    </div>
+    <div>
+      <input type='number' name ='cantidad' placeholder='y cuánto gastó'>
+    </div>
+    <!--
+    <div>
+      <input type="radio" name="finished" id="finished" class="css-checkbox" />
+        <label for="finished" class="css-label">Listo todos</label>
+    </div>
+    -->
+    <br>
+    <div class="onoffswitch">
+        <input type="checkbox" name="finished" class="onoffswitch-checkbox" id="finished" >
+        <label for="finished" class="onoffswitch-label">
+            <span class="onoffswitch-inner"></span>
+            <span class="onoffswitch-switch"></span>
+        </label>
+    </div>
+    <br>
+    <div>
+      <input type='submit' value='Agregarme al listado'>
+    </div>
+  </div>
+</form>
