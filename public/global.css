@@ -1,112 +1,68 @@
 * {
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
 }
+
 html {
-	position: relative;
-	background: url("/party.jpg");
-	background-attachment: fixed;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: cover;
-	width: 100%;
-	height: 100%;
-	text-align: center;
-	color: white;
-	font-family: Helvetica, cursive;
-	font-size: 22px;
+  position: relative;
+  background: url("/party.jpg");
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  color: white;
+  font-family: Helvetica, cursive;
+  font-size: 22px;
 }
+
 h1, p, li {
-	text-shadow: 1px 1px 7px black;
-	font-family: 'Satisfy', Helvetica, cursive;
+  text-shadow: 1px 1px 7px black;
+  font-family: 'Satisfy', Helvetica, cursive;
 }
+
 h1 {
-	margin: auto;
-	margin-top: 50px;
-	font-size: 60px;
+  margin: auto;
+  margin-top: 50px;
+  font-size: 60px;
 }
-.numbers {
-	border: 1px solid;
-	width: 30%;
-}
-.panel {
-	margin: auto;
-	border: 1px solid;
-	padding: 10px;
-	width: 400px;
-	height: 370px;
-}
+
 p {
-	font-size: 25px;
+  font-size: 25px;
 }
+
 p.subtitle {
-	margin-bottom: 10px;
-	padding: 0px;
+  margin-bottom: 10px;
+  padding: 0px;
 }
-a {
-	text-decoration: none;
-	color: white;
-}
-ul {
-	list-style-type: none;
-	text-align: initial;
-}
-li {
-	font-size: 35px;
-}
-.izq {
-	float: left;
-	margin-left: 8%;
-}
-.der {
-	float: right;
-	margin-right: 8%;
-}
+
 div.header {
-	overflow: hidden;
+  overflow: hidden;
 }
-input {
-	position: relative;
-	opacity: 0.8;
-	margin: 10px;
-	border: 0;
-	background-color: black;
-	padding: 10px;
-	color: white;
-	font-size: 22px;
-}
-input[type="submit"] {
-	background: red;
-	color: white;
-}
+
 footer {
-	display: inline-block;
-	position: absolute;
-	right: 10px;
-	margin-top: 40px;
+  display: inline-block;
+  position: absolute;
+  right: 10px;
+  margin-top: 40px;
 }
+
 details summary::-webkit-details-marker {
-	display: none;
+  display: none;
 }
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
 a:hover {
-	text-decoration: underline;
+  text-decoration: underline;
 }
-label {
-	display: block;
-}
-input, button, select, textarea {
-	box-sizing: border-box;
-	margin: 0 0 0.5em 0;
-	border: 1px solid #ccc;
-	border-radius: 2px;
-	padding: 0.4em;
-	font-family: inherit;
-	font-size: inherit;
-}
-input:disabled {
-	color: #ccc;
-}
-input[type="range"] {
-	height: 0;
+
+a:visited {
+  text-decoration: none;
 }

@@ -1,10 +1,10 @@
 <form action='/form' method='POST'>
   <div class="forma">
     <div>
-      <input type='text' name ='user_name' placeholder='Nombre'>
+      <input type='text' name='user_name' placeholder='Nombre'>
     </div>
     <div>
-      <input type='number' name ='cantidad' placeholder='y cuánto gastó'>
+      <input type='number' name='cantidad' placeholder='y cuánto gastó'>
     </div>
     <!--
     <div>
@@ -14,11 +14,11 @@
     -->
     <br>
     <div class="onoffswitch">
-        <input type="checkbox" name="finished" class="onoffswitch-checkbox" id="finished" >
-        <label for="finished" class="onoffswitch-label">
-            <span class="onoffswitch-inner"></span>
-            <span class="onoffswitch-switch"></span>
-        </label>
+      <input type="checkbox" name="finished" class="onoffswitch-checkbox" id="finished">
+      <label for="finished" class="onoffswitch-label">
+        <span class="onoffswitch-inner"></span>
+        <span class="onoffswitch-switch"></span>
+      </label>
     </div>
     <br>
     <div>
@@ -26,3 +26,21 @@
     </div>
   </div>
 </form>
+
+<style>
+  input {
+    position: relative;
+    opacity: 0.8;
+    margin: 10px;
+    border: 0;
+    background-color: black;
+    padding: 10px;
+    color: white;
+    font-size: 22px;
+  }
+
+  input[type="submit"] {
+    background: red;
+    color: white;
+  }
+</style>
