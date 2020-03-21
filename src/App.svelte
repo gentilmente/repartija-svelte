@@ -10,15 +10,15 @@
 	<p class="subtitle">No mas ebrios haciendo cuentas</p>
 
 	{#if menu === 1}
-	<Start on:click = {()=> menu = 2} />
-		{:else if menu === 2}
+		<Start on:click = {()=> menu = 2} />
+	{:else if menu === 2}
 		<Form/>
 		<!--{console.log(menu)}-->
-		{:else}
+	{:else}
 		<h1>
 			Page Not Found
 		</h1>
-		{/if}
+	{/if}
 		
 </main>
 
