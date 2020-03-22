@@ -1,18 +1,12 @@
 <script>
-  import {
-    quintOut
-  } from 'svelte/easing';
-  import {
-    crossfade
-  } from 'svelte/transition';
-  import {
-    flip
-  } from 'svelte/animate';
+  import { quintOut } from "svelte/easing";
+  import { crossfade } from "svelte/transition";
+  import { flip } from "svelte/animate";
 
   const [send, receive] = crossfade({
     fallback(node, params) {
       const style = getComputedStyle(node);
-      const transform = style.transform === 'none' ? '' : style.transform;
+      const transform = style.transform === "none" ? "" : style.transform;
 
       return {
         duration: 600,
@@ -25,103 +19,118 @@
     }
   });
 
-  let todos = [{
+  let payments = [
+    {
       id: 1,
       done: false,
-      description: 'write some docs'
+      name: "Gise"
     },
     {
       id: 2,
       done: false,
-      description: 'start writing JSConf talk'
+      name: "Coral"
     },
     {
       id: 3,
       done: true,
-      description: 'buy some milk'
+      name: "María"
     },
     {
       id: 4,
       done: false,
-      description: 'mow the lawn'
+      name: "Minna"
     },
     {
       id: 5,
       done: false,
-      description: 'feed the turtle'
+      name: "Carlos"
     },
     {
       id: 6,
       done: false,
-      description: 'fix some bugs'
-    },
+      name: "Vanesa"
+    }
   ];
 
-  let uid = todos.length + 1;
+  let uid = payments.length + 1;
 
   function add(input) {
-    const todo = {
+    const payment = {
       id: uid++,
       done: false,
-      description: input.value
+      name: input.value
     };
 
-    todos = [todo, ...todos];
-    input.value = '';
+    payments = [payment, ...payments];
+    input.value = "";
   }
 
-  function remove(todo) {
-    todos = todos.filter(t => t !== todo);
+  function remove(payment) {
+    payments = payments.filter(t => t !== payment);
   }
 </script>
 
-<div class='board'>
+<div class="board">
   <div>
-    <input class="new-todo" type='text' name='user_name' placeholder='Nombre'
-      on:keydown="{event => event.which === 13 && add(event.target)}">
+    <input
+      class="new-payment"
+      type="text"
+      name="user_name"
+      placeholder="Nombre"
+    />
   </div>
   <div>
-    <input type='number' name='cantidad' placeholder='y cuánto gastó'>
+    <input type="number" name="cantidad" placeholder="¿cuánto gastó?" />
   </div>
 
   <div>
-    <input type='submit' value='Agregarme al listado'>
+    <input
+      type="submit"
+      value="Agregar al listado"
+      on:keydown="{event => event.which === 13 && add(event.target)}"
+    />
   </div>
 
+  <div class="left">
+    <h2>Vinieron</h2>
+    {#each payments.filter(t => !t.done) as payment (payment.id)}
+    <label
+      in:receive="{{key: payment.id}}"
+      out:send="{{key: payment.id}}"
+      animate:flip
+    >
+      <input type="checkbox" bind:checked="{payment.done}" />
+      {payment.name}
+      <button on:click="{() => remove(payment)}">x</button>
+    </label>
+    {/each}
+  </div>
 
-  <div class='left'>
-    <h2>todo</h2>
-    {#each todos.filter(t => !t.done) as todo (todo.id)}
-			<label
-				in:receive="{{key: todo.id}}"
-				out:send="{{key: todo.id}}"
-				animate:flip
-			>
-				<input type=checkbox bind:checked={todo.done}>
-				{todo.description}
-				<button on:click="{() => remove(todo)}">x</button>
-			</label>
-		{/each}
-	</div>
-
-	<div class='right'>
-		<h2>done</h2>
-		{#each todos.filter(t => t.done) as todo (todo.id)}
-			<label
-				in:receive="{{key: todo.id}}"
-				out:send="{{key: todo.id}}"
-				animate:flip
-			>
-				<input type=checkbox bind:checked={todo.done}>
-				{todo.description}
-				<button on:click="{() => remove(todo)}">x</button>
-			</label>
-		{/each}
-	</div>
+  <div class="right">
+    <h2>Pagan</h2>
+    {#each payments.filter(t => t.done) as payment (payment.id)}
+    <label
+      in:receive="{{key: payment.id}}"
+      out:send="{{key: payment.id}}"
+      animate:flip
+    >
+      <input type="checkbox" bind:checked="{payment.done}" />
+      {payment.name}
+      <button on:click="{() => remove(payment)}">x</button>
+    </label>
+    {/each}
+  </div>
 </div>
 
-
 <style>
+  /*
+
+  .new-payment {
+    font-size: 1.4em;
+    width: 100%;
+    margin: 2em 0 1em 0;
+  }
+  */
   input {
     position: relative;
     opacity: 0.8;
@@ -138,12 +147,6 @@
     color: white;
   }
 
-  .new-todo {
-    font-size: 1.4em;
-    width: 100%;
-    margin: 2em 0 1em 0;
-  }
-
   .board {
     max-width: 36em;
     margin: 0 auto;
@@ -155,6 +158,7 @@
     width: 50%;
     padding: 0 1em 0 0;
     box-sizing: border-box;
+    opacity: 0.8;
   }
 
   h2 {
@@ -172,16 +176,12 @@
     padding: 0.5em;
     margin: 0 auto 0.5em auto;
     border-radius: 2px;
-    background-color: #eee;
+    background-color: black;
     user-select: none;
   }
 
-  input {
-    margin: 0
-  }
-
   .right label {
-    background-color: rgb(180, 240, 100);
+    background-color: rgb(92, 160, 2);
   }
 
   button {
