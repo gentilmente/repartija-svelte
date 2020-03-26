@@ -23,46 +23,60 @@
     {
       id: 1,
       done: false,
-      name: "Gise"
+      name: "Bufarra",
+      pay: 40
     },
     {
       id: 2,
       done: false,
-      name: "Coral"
+      name: "Martin",
+      pay: 378
     },
     {
       id: 3,
       done: true,
-      name: "María"
+      name: "Joni",
+      pay: 110
     },
     {
       id: 4,
       done: false,
-      name: "Minna"
+      name: "Pedro",
+      pay: 0
     },
     {
       id: 5,
       done: false,
-      name: "Carlos"
+      name: "Cachi",
+      pay: 0
     },
     {
       id: 6,
+      done: true,
+      name: "Gisela",
+      pay: 172
+    },
+    {
+      id: 7,
       done: false,
-      name: "Vanesa"
+      name: "Eze",
+      pay: 0
     }
   ];
 
   let uid = payments.length + 1;
+  let name = "";
+  let pay;
 
-  function add(input) {
+  function add() {
     const payment = {
       id: uid++,
       done: false,
-      name: input.value
+      name: name,
+      pay: pay
     };
 
     payments = [payment, ...payments];
-    input.value = "";
   }
 
   function remove(payment) {
@@ -72,23 +86,13 @@
 
 <div class="board">
   <div>
-    <input
-      class="new-payment"
-      type="text"
-      name="user_name"
-      placeholder="Nombre"
-    />
+    <input type="text" placeholder="Nombre" bind:value="{name}" />
   </div>
   <div>
-    <input type="number" name="cantidad" placeholder="¿cuánto gastó?" />
+    <input type="number" placeholder="¿cuánto gastó?" bind:value="{pay}" />
   </div>
-
   <div>
-    <input
-      type="submit"
-      value="Agregar al listado"
-      on:keydown="{event => event.which === 13 && add(event.target)}"
-    />
+    <input type="button" value="Agregar al listado" on:click="{add}" />
   </div>
 
   <div class="left">
@@ -100,7 +104,7 @@
       animate:flip
     >
       <input type="checkbox" bind:checked="{payment.done}" />
-      {payment.name}
+      {payment.name + ": " + payment.pay}
       <button on:click="{() => remove(payment)}">x</button>
     </label>
     {/each}
@@ -115,22 +119,19 @@
       animate:flip
     >
       <input type="checkbox" bind:checked="{payment.done}" />
-      {payment.name}
+      {payment.name + ": " + payment.pay}
       <button on:click="{() => remove(payment)}">x</button>
     </label>
     {/each}
   </div>
+
+  <div>
+    <p>{payments.filter(t =>t.done).reduce((a, b) => a + (b['pay'] || 0), 0)}</p>
+  </div>
+
 </div>
 
 <style>
-  /*
-
-  .new-payment {
-    font-size: 1.4em;
-    width: 100%;
-    margin: 2em 0 1em 0;
-  }
-  */
   input {
     position: relative;
     opacity: 0.8;
@@ -142,7 +143,7 @@
     font-size: 22px;
   }
 
-  input[type="submit"] {
+  input[type="button"] {
     background: red;
     color: white;
   }
