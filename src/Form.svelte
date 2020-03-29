@@ -105,7 +105,7 @@
     >
       <input type="checkbox" bind:checked="{payment.done}" />
       {payment.name + ": " + payment.pay}
-      <button class="badge" on:click="{() => remove(payment)}">x</button>
+      <button class="badge" on:click="{() => remove(payment)}">X</button>
     </label>
     {/each}
   </div>
@@ -156,7 +156,7 @@
 
   input[type="checkbox"] {
     margin: 0;
-    opacity: 0;
+    display: none
   }
 
   .left,
@@ -178,6 +178,7 @@
     top: 0;
     left: 0;
     display: block;
+    text-align: left;
     font-size: 0.9em;
     line-height: 1;
     padding: 0.3em;
@@ -194,7 +195,7 @@
   .badge {
     float: right;
     position: relative;
-    top: -2px;
+    top: -4px;
     padding: 5px 10px;
     border-radius: 50%;
     background: red;
