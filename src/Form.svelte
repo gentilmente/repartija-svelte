@@ -105,7 +105,7 @@
     >
       <input type="checkbox" bind:checked="{payment.done}" />
       {payment.name + ": " + payment.pay}
-      <button on:click="{() => remove(payment)}">x</button>
+      <button class="badge" on:click="{() => remove(payment)}">x</button>
     </label>
     {/each}
   </div>
@@ -120,18 +120,24 @@
     >
       <input type="checkbox" bind:checked="{payment.done}" />
       {payment.name + ": " + payment.pay}
-      <button on:click="{() => remove(payment)}">x</button>
+      <button class="badge" on:click="{() => remove(payment)}">X</button>
     </label>
     {/each}
   </div>
 
   <div>
-    <p>{payments.filter(t =>t.done).reduce((a, b) => a + (b['pay'] || 0), 0)}</p>
+    <p>
+      {payments.filter(t =>t.done).reduce((a, b) => a + (b['pay'] || 0), 0)}
+    </p>
   </div>
-
 </div>
 
 <style>
+  .board {
+    max-width: 36em;
+    margin: 0 auto;
+  }
+
   input {
     position: relative;
     opacity: 0.8;
@@ -148,16 +154,16 @@
     color: white;
   }
 
-  .board {
-    max-width: 36em;
-    margin: 0 auto;
+  input[type="checkbox"] {
+    margin: 0;
+    opacity: 0;
   }
 
   .left,
   .right {
     float: left;
     width: 50%;
-    padding: 0 1em 0 0;
+    padding: 0 0.5em 0 0;
     box-sizing: border-box;
     opacity: 0.8;
   }
@@ -172,10 +178,10 @@
     top: 0;
     left: 0;
     display: block;
-    font-size: 1em;
+    font-size: 0.9em;
     line-height: 1;
-    padding: 0.5em;
-    margin: 0 auto 0.5em auto;
+    padding: 0.3em;
+    margin: 0 auto 0.3em auto;
     border-radius: 2px;
     background-color: black;
     user-select: none;
@@ -185,20 +191,14 @@
     background-color: rgb(92, 160, 2);
   }
 
-  button {
+  .badge {
     float: right;
-    height: 1em;
-    box-sizing: border-box;
-    padding: 0 0.5em;
-    line-height: 1;
-    background-color: transparent;
-    border: none;
-    color: rgb(170, 30, 30);
-    opacity: 0;
-    transition: opacity 0.2s;
-  }
-
-  label:hover button {
-    opacity: 1;
+    position: relative;
+    top: -2px;
+    padding: 5px 10px;
+    border-radius: 50%;
+    background: red;
+    color: white;
+    border: 0px;
   }
 </style>
