@@ -12,41 +12,46 @@
         duration: 600,
         easing: quintOut,
         css: t => `
-					transform: ${transform} scale(${t});
-					opacity: ${t}
-				`
+  					transform: ${transform} scale(${t});
+  					opacity: ${t}
+  				`
       };
     }
   });
 
-  let payments = [
+  let payments = [];
+  let total
+  let individualPayment
+
+  //*
+  payments = [
     {
       id: 1,
-      done: false,
+      done: true,
       name: "Bufarra",
       pay: 40
     },
     {
       id: 2,
-      done: false,
+      done: true,
       name: "Martin",
-      pay: 378
+      pay: 600
     },
     {
       id: 3,
       done: true,
       name: "Joni",
-      pay: 110
+      pay: 150
     },
     {
       id: 4,
-      done: false,
+      done: true,
       name: "Pedro",
       pay: 0
     },
     {
       id: 5,
-      done: false,
+      done: true,
       name: "Cachi",
       pay: 0
     },
@@ -54,15 +59,17 @@
       id: 6,
       done: true,
       name: "Gisela",
-      pay: 172
+      pay: 200
     },
     {
       id: 7,
-      done: false,
+      done: true,
       name: "Eze",
       pay: 0
     }
   ];
+
+  //*/
 
   let uid = payments.length + 1;
   let name = "";
@@ -82,6 +89,29 @@
   function remove(payment) {
     payments = payments.filter(t => t !== payment);
   }
+
+  $: calculate = function() {
+    let balance = prepareDataSet();
+    /*
+    let creditors,
+      debtors = devide_list(balance);
+    let result = {}
+      creditors.each do |creditor, creditor_amount|
+        collect(creditor, creditor_amount)
+        */
+    return balance;
+  };
+
+  $: prepareDataSet = function() {
+    total = payments
+      .filter(t => t.done)
+      .reduce((a, b) => a + (b["pay"] || 0), 0);
+    individualPayment = (total / payments.filter(t => t.done).length).toFixed()
+    let balance = payments.map(payment => {
+      return (individualPayment - payment.pay)
+    });
+    return balance;
+  };
 </script>
 
 <div class="board">
@@ -126,8 +156,14 @@
   </div>
 
   <div>
+    <p class="left">
+      total: {total}
+    </p>
+    <p class="right">
+     pago individual: {individualPayment}
+    </p>
     <p>
-      {payments.filter(t =>t.done).reduce((a, b) => a + (b['pay'] || 0), 0)}
+      {calculate()}
     </p>
   </div>
 </div>
@@ -156,7 +192,7 @@
 
   input[type="checkbox"] {
     margin: 0;
-    display: none
+    display: none;
   }
 
   .left,
@@ -171,7 +207,6 @@
   h2 {
     font-size: 2em;
     font-weight: 200;
-    user-select: none;
   }
 
   label {
