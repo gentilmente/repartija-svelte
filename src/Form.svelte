@@ -2,6 +2,7 @@
   import { quintOut } from "svelte/easing";
   import { crossfade } from "svelte/transition";
   import { flip } from "svelte/animate";
+  import Results from './Results.svelte';
 
   const [send, receive] = crossfade({
     fallback(node, params) {
@@ -20,9 +21,10 @@
   });
 
   let payments = [];
-  let total
-  let individualPayment
-
+  let total;
+  let individualPayment;
+  let creditors = [];
+  let debtors = [];
   //*
   payments = [
     {
@@ -92,25 +94,31 @@
 
   $: calculate = function() {
     let balance = prepareDataSet();
+    let { creditors, debtors } = devideList(balance)
     /*
-    let creditors,
-      debtors = devide_list(balance);
     let result = {}
       creditors.each do |creditor, creditor_amount|
         collect(creditor, creditor_amount)
         */
-    return balance;
+    return {creditors, debtors};
   };
 
   $: prepareDataSet = function() {
     total = payments
       .filter(t => t.done)
       .reduce((a, b) => a + (b["pay"] || 0), 0);
-    individualPayment = (total / payments.filter(t => t.done).length).toFixed()
+    individualPayment = (total / payments.filter(t => t.done).length).toFixed();
     let balance = payments.map(payment => {
-      return (individualPayment - payment.pay)
+      return individualPayment - payment.pay;
     });
     return balance;
+  };
+
+  $: devideList = function(balance) {
+    return {
+      creditors: balance.filter(e => e < 0),
+      debtors: balance.filter(e => e >= 0)
+    };
   };
 </script>
 
@@ -155,17 +163,8 @@
     {/each}
   </div>
 
-  <div>
-    <p class="left">
-      total: {total}
-    </p>
-    <p class="right">
-     pago individual: {individualPayment}
-    </p>
-    <p>
-      {calculate()}
-    </p>
-  </div>
+  <Results {...calculate()}/>
+
 </div>
 
 <style>
