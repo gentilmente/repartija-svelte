@@ -23,9 +23,9 @@
   let payments = [];
   let total;
   let individualPayment;
-  let creditors;
-  let debtors;
-  //*
+  let creditors = [];
+  let debtors = [];
+
   payments = [
     {
       id: 1,
@@ -71,8 +71,6 @@
     }
   ];
 
-  //*/
-
   let uid = payments.length + 1;
   let name = "";
   let pay;
@@ -94,17 +92,12 @@
 
   $: calculate = function() {
     let balance = prepareDataSet();
-    let [creditors, debtors] = devideList(balance);
-    /*
-    let result = {}
-      creditors.each do |creditor, creditor_amount|
-        collect(creditor, creditor_amount)
-        */
+    const { creditors, debtors } = devideList(balance);
     return {
-      creditors,
-      debtors,
       total,
-      individualPayment
+      individualPayment,
+      creditors,
+      debtors
     };
   };
 
