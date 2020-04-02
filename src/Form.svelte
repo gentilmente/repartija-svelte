@@ -1,7 +1,13 @@
 <script>
-  import { quintOut } from "svelte/easing";
-  import { crossfade } from "svelte/transition";
-  import { flip } from "svelte/animate";
+  import {
+    quintOut
+  } from "svelte/easing";
+  import {
+    crossfade
+  } from "svelte/transition";
+  import {
+    flip
+  } from "svelte/animate";
   import Results from './Results.svelte';
 
   const [send, receive] = crossfade({
@@ -26,8 +32,7 @@
   let creditors = [];
   let debtors = [];
   //*
-  payments = [
-    {
+  payments = [{
       id: 1,
       done: true,
       name: "Bufarra",
@@ -92,18 +97,26 @@
     payments = payments.filter(t => t !== payment);
   }
 
-  $: calculate = function() {
+  $: calculate = function () {
     let balance = prepareDataSet();
-    let { creditors, debtors } = devideList(balance)
+    let {
+      creditors,
+      debtors
+    } = devideList(balance)
     /*
     let result = {}
       creditors.each do |creditor, creditor_amount|
         collect(creditor, creditor_amount)
         */
-    return {creditors, debtors};
+    return {
+      creditors,
+      debtors,
+      total,
+      individualPayment
+    };
   };
 
-  $: prepareDataSet = function() {
+  $: prepareDataSet = function () {
     total = payments
       .filter(t => t.done)
       .reduce((a, b) => a + (b["pay"] || 0), 0);
@@ -114,7 +127,7 @@
     return balance;
   };
 
-  $: devideList = function(balance) {
+  $: devideList = function (balance) {
     return {
       creditors: balance.filter(e => e < 0),
       debtors: balance.filter(e => e >= 0)
