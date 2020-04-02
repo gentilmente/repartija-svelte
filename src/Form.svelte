@@ -25,6 +25,8 @@
   let individualPayment;
   let creditors = [];
   let debtors = [];
+  let name = "";
+  let pay;
 
   payments = [
     {
@@ -71,18 +73,14 @@
     }
   ];
 
-  let uid = payments.length + 1;
-  let name = "";
-  let pay;
-
   function add() {
+    let uid = payments.length + 1;
     const payment = {
       id: uid++,
       done: false,
       name: name,
       pay: pay
     };
-
     payments = [payment, ...payments];
   }
 
@@ -92,7 +90,7 @@
 
   $: calculate = function() {
     let balance = prepareDataSet();
-    const { creditors, debtors } = devideList(balance);
+    let { creditors, debtors } = devideList(balance);
     return {
       total,
       individualPayment,
@@ -102,18 +100,16 @@
   };
 
   $: prepareDataSet = function() {
-    total = payments
-      .filter(t => t.done)
-      .reduce((a, b) => a + (b["pay"] || 0), 0);
-    individualPayment = (total / payments.filter(t => t.done).length).toFixed();
-    let balance = payments.map(payment => {
+    let payers = payments.filter(t => t.done);
+    total = payers.reduce((a, b) => a + (b["pay"] || 0), 0);
+    individualPayment = (total / payers.length).toFixed();
+    return payers.map(payment => {
       payment = {
         ...payment,
         pay: individualPayment - payment.pay
       };
       return payment;
     });
-    return balance;
   };
 
   $: devideList = function(balance) {
