@@ -1,14 +1,8 @@
 <script>
-  import {
-    quintOut
-  } from "svelte/easing";
-  import {
-    crossfade
-  } from "svelte/transition";
-  import {
-    flip
-  } from "svelte/animate";
-  import Results from './Results.svelte';
+  import { quintOut } from "svelte/easing";
+  import { crossfade } from "svelte/transition";
+  import { flip } from "svelte/animate";
+  import Results from "./Results.svelte";
 
   const [send, receive] = crossfade({
     fallback(node, params) {
@@ -29,10 +23,11 @@
   let payments = [];
   let total;
   let individualPayment;
-  let creditors = [];
-  let debtors = [];
+  let creditors;
+  let debtors;
   //*
-  payments = [{
+  payments = [
+    {
       id: 1,
       done: true,
       name: "Bufarra",
@@ -97,12 +92,9 @@
     payments = payments.filter(t => t !== payment);
   }
 
-  $: calculate = function () {
+  $: calculate = function() {
     let balance = prepareDataSet();
-    let {
-      creditors,
-      debtors
-    } = devideList(balance)
+    let [creditors, debtors] = devideList(balance);
     /*
     let result = {}
       creditors.each do |creditor, creditor_amount|
@@ -116,69 +108,28 @@
     };
   };
 
-  $: prepareDataSet = function () {
+  $: prepareDataSet = function() {
     total = payments
       .filter(t => t.done)
       .reduce((a, b) => a + (b["pay"] || 0), 0);
     individualPayment = (total / payments.filter(t => t.done).length).toFixed();
     let balance = payments.map(payment => {
-      return individualPayment - payment.pay;
+      payment = {
+        ...payment,
+        pay: individualPayment - payment.pay
+      };
+      return payment;
     });
     return balance;
   };
 
-  $: devideList = function (balance) {
+  $: devideList = function(balance) {
     return {
-      creditors: balance.filter(e => e < 0),
-      debtors: balance.filter(e => e >= 0)
+      creditors: balance.filter(e => e.pay < 0),
+      debtors: balance.filter(e => e.pay >= 0)
     };
   };
 </script>
-
-<div class="board">
-  <div>
-    <input type="text" placeholder="Nombre" bind:value="{name}" />
-  </div>
-  <div>
-    <input type="number" placeholder="¿cuánto gastó?" bind:value="{pay}" />
-  </div>
-  <div>
-    <input type="button" value="Agregar al listado" on:click="{add}" />
-  </div>
-
-  <div class="left">
-    <h2>Vinieron</h2>
-    {#each payments.filter(t => !t.done) as payment (payment.id)}
-    <label
-      in:receive="{{key: payment.id}}"
-      out:send="{{key: payment.id}}"
-      animate:flip
-    >
-      <input type="checkbox" bind:checked="{payment.done}" />
-      {payment.name + ": " + payment.pay}
-      <button class="badge" on:click="{() => remove(payment)}">X</button>
-    </label>
-    {/each}
-  </div>
-
-  <div class="right">
-    <h2>Pagan</h2>
-    {#each payments.filter(t => t.done) as payment (payment.id)}
-    <label
-      in:receive="{{key: payment.id}}"
-      out:send="{{key: payment.id}}"
-      animate:flip
-    >
-      <input type="checkbox" bind:checked="{payment.done}" />
-      {payment.name + ": " + payment.pay}
-      <button class="badge" on:click="{() => remove(payment)}">X</button>
-    </label>
-    {/each}
-  </div>
-
-  <Results {...calculate()}/>
-
-</div>
 
 <style>
   .board {
@@ -250,3 +201,46 @@
     border: 0px;
   }
 </style>
+
+<div class="board">
+  <div>
+    <input type="text" placeholder="Nombre" bind:value={name} />
+  </div>
+  <div>
+    <input type="number" placeholder="¿cuánto gastó?" bind:value={pay} />
+  </div>
+  <div>
+    <input type="button" value="Agregar al listado" on:click={add} />
+  </div>
+
+  <div class="left">
+    <h2>Vinieron</h2>
+    {#each payments.filter(t => !t.done) as payment (payment.id)}
+      <label
+        in:receive={{ key: payment.id }}
+        out:send={{ key: payment.id }}
+        animate:flip>
+        <input type="checkbox" bind:checked={payment.done} />
+        {payment.name + ': ' + payment.pay}
+        <button class="badge" on:click={() => remove(payment)}>X</button>
+      </label>
+    {/each}
+  </div>
+
+  <div class="right">
+    <h2>Pagan</h2>
+    {#each payments.filter(t => t.done) as payment (payment.id)}
+      <label
+        in:receive={{ key: payment.id }}
+        out:send={{ key: payment.id }}
+        animate:flip>
+        <input type="checkbox" bind:checked={payment.done} />
+        {payment.name + ': ' + payment.pay}
+        <button class="badge" on:click={() => remove(payment)}>X</button>
+      </label>
+    {/each}
+  </div>
+
+  <Results {...calculate()} />
+
+</div>
