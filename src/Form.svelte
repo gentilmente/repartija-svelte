@@ -23,10 +23,11 @@
   let payments = [];
   let total;
   let individualPayment;
-  let creditors = [];
-  let debtors = [];
   let name = "";
   let pay;
+
+  let credAccum;
+  let actualCreditorAmount;
 
   payments = [
     {
@@ -73,6 +74,17 @@
     }
   ];
 
+  let result = [
+    {
+      name: "juan",
+      debtorss: [{ name: "ana", pay: 22 }, { name: "mario", pay: 33 }]
+    },
+    {
+      name: "juanita",
+      debtorss: [{ name: "anita", pay: 55 }, { name: "marito", pay: 66 }]
+    }
+  ];
+
   function add() {
     let uid = payments.length + 1;
     const payment = {
@@ -89,13 +101,16 @@
   }
 
   $: calculate = function() {
+    let yetToPay;
     let balance = prepareDataSet();
     let { creditors, debtors } = devideList(balance);
+
+    //let result = creditors.map(cred => collect(cred.name, cred.pay));
+
     return {
       total,
       individualPayment,
-      creditors,
-      debtors
+      result
     };
   };
 
@@ -105,7 +120,7 @@
     individualPayment = (total / payers.length).toFixed();
     return payers.map(payment => {
       payment = {
-        ...payment,
+        ...payment, //spread all props to new object except the one you need to change
         pay: individualPayment - payment.pay
       };
       return payment;
@@ -117,6 +132,33 @@
       creditors: balance.filter(e => e.pay < 0),
       debtors: balance.filter(e => e.pay >= 0)
     };
+  };
+
+  $: collect = function(creditor, credAmount) {
+    actualCreditorAmount = credAmount;
+    credAccum = 0;
+    debtors.map(debtor => toPay(debtor.name, debtor.pay, creditor, credAmount));
+  };
+
+  $: toPay = function(debtor, debt, creditor, credAmount) {
+    if (debt > 0 && credAmount < 0) {
+      credAccum += debt;
+      yetToPay = credAccum + credAmount;
+      if (yetToPay > 0 && yetToPay < individualPayment) {
+        let paiment = debt - yetToPay;
+        balance(creditor, debtor, payment);
+      } else if (debt < individualPayment) {
+        balance(creditor, debtor, debt);
+      } else if (yetToPay <= 0) {
+        balance(creditor, debtor, individualPayment);
+      }
+    }
+  };
+
+  $: balance = function(creditor, debtor, paiment) {
+    debtors[debtor] = yetToPay;
+    creditors[creditor] += paiment;
+    actualCreditorAmount = creditors[creditor];
   };
 </script>
 
@@ -153,7 +195,6 @@
     width: 50%;
     padding: 0 0.5em 0 0;
     box-sizing: border-box;
-    opacity: 0.8;
   }
 
   h2 {

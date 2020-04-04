@@ -1,25 +1,40 @@
 <script>
   export let total;
   export let individualPayment;
-  export let debtors;
-  export let creditors;
+  export let result;
 </script>
 
-<div>
-  <p class="left">total: {total}</p>
-  <p class="right">pago individual: {individualPayment}</p>
-  <h1>deudores</h1>
-  <p>
-    {#each debtors as debt}
-      <label>{debt.name + ': ' + debt.pay}</label>
-      <br />
+<style>
+  .box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 30px;
+    width: 100vw;
+  }
+
+  .box .debtors {
+    padding-right: 50px;
+    align-self: flex-end;
+  }
+</style>
+
+<p class="left">total: {total}</p>
+<p class="right">pago individual: {individualPayment}</p>
+<h1>Resultado:</h1>
+<div class="box">
+
+  {#each result as item}
+    <div>
+      A
+      <b>{item.name}</b>
+      le deben pagar
+    </div>
+    {#each item.debtorss as d}
+      <div class="debtors">{d.name + ': ' + d.pay}</div>
     {/each}
-  </p>
-  <h1>acreedores</h1>
-  <p>
-    {#each creditors as cred}
-      <label>{cred.name + ': ' + cred.pay}</label>
-      <br />
-    {/each}
-  </p>
+  {/each}
+
 </div>
+<br />
+<br />
