@@ -9,13 +9,13 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding-left: 30px;
+    padding-right: 80px;
     width: 100vw;
   }
 
   .box .debtors {
-    padding-right: 50px;
-    align-self: flex-end;
+    padding-left: 80px;
+    align-self: center;
   }
 </style>
 
