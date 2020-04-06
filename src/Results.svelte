@@ -23,7 +23,7 @@
 <p class="right">pago individual: {individualPayment}</p>
 <h1>Resultado:</h1>
 <div class="box">
-
+{@debug result}
   {#each result as item}
     <div>
       A

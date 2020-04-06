@@ -74,7 +74,7 @@
     }
   ];
 
-  let result = [
+  /*   let result = [
     {
       name: "juan",
       debtorss: [{ name: "ana", pay: 22 }, { name: "mario", pay: 33 }]
@@ -83,7 +83,7 @@
       name: "juanita",
       debtorss: [{ name: "anita", pay: 55 }, { name: "marito", pay: 66 }]
     }
-  ];
+  ]; */
 
   function add() {
     let uid = payments.length + 1;
@@ -101,12 +101,11 @@
   }
 
   $: calculate = function() {
-    let yetToPay;
     let balance = prepareDataSet();
     let { creditors, debtors } = devideList(balance);
 
-    //let result = creditors.map(cred => collect(cred.name, cred.pay));
-
+    let result = creditors.map(cred => collect(cred, debtors));
+    console.log(result);
     return {
       total,
       individualPayment,
@@ -134,31 +133,31 @@
     };
   };
 
-  $: collect = function(creditor, credAmount) {
-    actualCreditorAmount = credAmount;
+  $: collect = function(creditor, debtors) {
+    actualCreditorAmount = creditor.pay;
     credAccum = 0;
-    debtors.map(debtor => toPay(debtor.name, debtor.pay, creditor, credAmount));
+    debtors.map(debtor => toPay(debtor, creditor));
   };
 
-  $: toPay = function(debtor, debt, creditor, credAmount) {
-    if (debt > 0 && credAmount < 0) {
-      credAccum += debt;
-      yetToPay = credAccum + credAmount;
+  $: toPay = function(debtor, creditor) {
+    if (debtor.pay > 0 && creditor.pay < 0) {
+      credAccum += debtor.pay;
+      let yetToPay = credAccum + creditor.pay;
       if (yetToPay > 0 && yetToPay < individualPayment) {
-        let paiment = debt - yetToPay;
-        balance(creditor, debtor, payment);
-      } else if (debt < individualPayment) {
-        balance(creditor, debtor, debt);
+        let payment = debtor.pay - yetToPay;
+        debtor.pay = yetToPay;
+        creditor.pay += payment;
+        actualCreditorAmount = creditor.pay;
+      } else if (debtor.pay < individualPayment) {
+        debtor.pay = yetToPay;
+        creditor.pay += debtor.pay;
+        actualCreditorAmount = creditor.pay;
       } else if (yetToPay <= 0) {
-        balance(creditor, debtor, individualPayment);
+        debtor.pay = yetToPay;
+        creditor.pay += debtor.pay;
+        actualCreditorAmount = individualPayment;
       }
     }
-  };
-
-  $: balance = function(creditor, debtor, paiment) {
-    debtors[debtor] = yetToPay;
-    creditors[creditor] += paiment;
-    actualCreditorAmount = creditors[creditor];
   };
 </script>
 
