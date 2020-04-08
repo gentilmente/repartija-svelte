@@ -23,14 +23,14 @@
 <p class="right">pago individual: {individualPayment}</p>
 <h1>Resultado:</h1>
 <div class="box">
-{@debug result}
+
   {#each result as item}
     <div>
       A
       <b>{item.name}</b>
       le deben pagar
     </div>
-    {#each item.debtorss as d}
+    {#each item.debtors as d}
       <div class="debtors">{d.name + ': ' + d.pay}</div>
     {/each}
   {/each}

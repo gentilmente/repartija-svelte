@@ -22,10 +22,10 @@
 
   let payments = [];
   let total;
-  let individualPayment;
+  let individualPayment = 0;
   let name = "";
   let pay;
-
+  let debtorss = [];
   let credAccum;
   let actualCreditorAmount;
 
@@ -74,16 +74,27 @@
     }
   ];
 
-  /*   let result = [
+  let results = [
     {
-      name: "juan",
-      debtorss: [{ name: "ana", pay: 22 }, { name: "mario", pay: 33 }]
+      id: 2,
+      name: "Martin",
+      debtorss: [
+        { id: 3, name: "Bufarra", pay: 101 },
+        { id: 3, name: "Pedro", pay: 141 },
+        { id: 3, name: "Cachi", pay: 141 },
+        { id: 3, name: "Eze", pay: 76 }
+      ]
     },
     {
-      name: "juanita",
-      debtorss: [{ name: "anita", pay: 55 }, { name: "marito", pay: 66 }]
+      name: "Gisela",
+      debtorss: [{ name: "Eze", pay: 54 }]
+    },
+
+    {
+      name: "Joni",
+      debtorss: [{ name: "Eze", pay: 11 }]
     }
-  ]; */
+  ];
 
   function add() {
     let uid = payments.length + 1;
@@ -116,7 +127,7 @@
   $: prepareDataSet = function() {
     let payers = payments.filter(t => t.done);
     total = payers.reduce((a, b) => a + (b["pay"] || 0), 0);
-    individualPayment = (total / payers.length).toFixed();
+    individualPayment = Math.round(total / payers.length);
     return payers.map(payment => {
       payment = {
         ...payment, //spread all props to new object except the one you need to change
@@ -128,8 +139,12 @@
 
   $: devideList = function(balance) {
     return {
-      creditors: balance.filter(e => e.pay < 0),
-      debtors: balance.filter(e => e.pay >= 0)
+      creditors: balance
+        .filter(e => e.pay < 0)
+        .sort((a, b) => (a.pay > b.pay ? 1 : -1)),
+      debtors: balance
+        .filter(e => e.pay >= 0)
+        .sort((a, b) => (a.pay > b.pay ? -1 : 1))
     };
   };
 
@@ -137,26 +152,25 @@
     actualCreditorAmount = creditor.pay;
     credAccum = 0;
     debtors.map(debtor => toPay(debtor, creditor));
+    return { ...creditor, debtors };
   };
 
   $: toPay = function(debtor, creditor) {
-    if (debtor.pay > 0 && creditor.pay < 0) {
-      credAccum += debtor.pay;
-      let yetToPay = credAccum + creditor.pay;
-      if (yetToPay > 0 && yetToPay < individualPayment) {
-        let payment = debtor.pay - yetToPay;
-        debtor.pay = yetToPay;
-        creditor.pay += payment;
-        actualCreditorAmount = creditor.pay;
-      } else if (debtor.pay < individualPayment) {
-        debtor.pay = yetToPay;
-        creditor.pay += debtor.pay;
-        actualCreditorAmount = creditor.pay;
-      } else if (yetToPay <= 0) {
-        debtor.pay = yetToPay;
-        creditor.pay += debtor.pay;
-        actualCreditorAmount = individualPayment;
-      }
+    credAccum += debtor.pay;
+    let yetToPay = credAccum + creditor.pay;
+    if (yetToPay > 0 && yetToPay < individualPayment) {
+      let payment = debtor.pay - yetToPay;
+      debtor.pay = yetToPay;
+      creditor.pay += payment;
+      actualCreditorAmount = creditor.pay;
+    } else if (debtor.pay < individualPayment) {
+      debtor.pay = yetToPay;
+      creditor.pay += debtor.pay;
+      actualCreditorAmount = creditor.pay;
+    } else if (yetToPay <= 0) {
+      debtor.pay = yetToPay;
+      creditor.pay += debtor.pay;
+      actualCreditorAmount = individualPayment;
     }
   };
 </script>
