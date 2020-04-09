@@ -112,10 +112,11 @@
   }
 
   $: calculate = function() {
+    let result = [];
     let balance = prepareDataSet();
     let { creditors, debtors } = devideList(balance);
 
-    let result = creditors.map(cred => collect(cred, debtors));
+    result = creditors.map(cred => collect(cred, debtors));
     console.log(result);
     return {
       total,
@@ -124,7 +125,7 @@
     };
   };
 
-  let prepareDataSet = function() {
+  function prepareDataSet() {
     let payers = payments.filter(t => t.done);
     total = payers.reduce((a, b) => a + (b["pay"] || 0), 0);
     individualPayment = Math.round(total / payers.length);
@@ -136,7 +137,7 @@
     });
   };
 
-  let devideList = function(balance) {
+  function devideList(balance) {
     return {
       creditors: balance
         .filter(e => e.pay < 0)
@@ -147,14 +148,14 @@
     };
   };
 
-  let collect = function(creditor, debtors) {
+  function collect(creditor, debtors) {
     actualCreditorAmount = creditor.pay;
     credAccum = 0;
     debtors.map(debtor => toPay(debtor, creditor));
     return creditor; //construir un objeto custom para output.
   };
 
-  let toPay = function(debtor, creditor) {
+  function toPay(debtor, creditor) {
     //no actualizar listas hacerlas const (inmutables?)
     const credAmount = creditor.pay;
     if (debtor.pay > 0 && actualCreditorAmount < 0) {
@@ -171,13 +172,13 @@
     }
   };
 
-  let setBalance = function(creditor, debtor, payment) {
+  function setBalance(creditor, debtor, payment) {
     creditor.pay += payment;
     actualCreditorAmount = creditor.pay;
     generateOutput(creditor, debtor, payment);
   };
 
-  let generateOutput = function(creditor, debtor, payment) {
+  function generateOutput(creditor, debtor, payment) {
     if (creditor.hasOwnProperty("debtors")) {
       creditor.debtors.push({ ...debtor, payment: payment });
     } else {
