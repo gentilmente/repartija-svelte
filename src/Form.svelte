@@ -74,7 +74,7 @@
     }
   ];
 
-/*   let result = [
+  /* let result = [
     {
       id: 2,
       name: "Martin",
@@ -94,8 +94,8 @@
       name: "Joni",
       debtors: [{ name: "Eze", pay: 11, payment: 33 }]
     }
-  ];
- */
+  ]; */
+
   function add() {
     let uid = payments.length + 1;
     const payment = {
@@ -129,11 +129,10 @@
     total = payers.reduce((a, b) => a + (b["pay"] || 0), 0);
     individualPayment = Math.round(total / payers.length);
     return payers.map(payment => {
-      payment = {
+      return {
         ...payment, //spread all props to new object except the one you need to change
         pay: individualPayment - payment.pay
       };
-      return payment;
     });
   };
 
@@ -163,7 +162,7 @@
     if (yetToPay > 0 && yetToPay < individualPayment) {
       let payment = debtor.pay - yetToPay;
       actualCreditorAmount += payment;
-      creditor.pay += payment;
+      //creditor.pay += payment;
       if (creditor.hasOwnProperty("debtors")) {
         creditor.debtors.push({ ...debtor, payment: payment });
       } else {
@@ -171,14 +170,16 @@
       }
     } else if (debtor.pay < individualPayment) {
       actualCreditorAmount += debtor.pay;
-      creditor.pay += debtor.pay;
+      //creditor.pay += debtor.pay;
       creditor["debtors"] = [{ ...debtor, payment: debtor.pay }];
     } else if (yetToPay <= 0) {
-      creditor.pay += debtor.pay;
+      //creditor.pay += debtor.pay;
       actualCreditorAmount = individualPayment;
       creditor["debtors"] = [{ ...debtor, payment: individualPayment }];
     }
   };
+
+  $: generateOutput = function() {};
 </script>
 
 <style>
