@@ -124,7 +124,7 @@
     };
   };
 
-  $: prepareDataSet = function() {
+  let prepareDataSet = function() {
     let payers = payments.filter(t => t.done);
     total = payers.reduce((a, b) => a + (b["pay"] || 0), 0);
     individualPayment = Math.round(total / payers.length);
@@ -136,7 +136,7 @@
     });
   };
 
-  $: devideList = function(balance) {
+  let devideList = function(balance) {
     return {
       creditors: balance
         .filter(e => e.pay < 0)
@@ -147,39 +147,43 @@
     };
   };
 
-  $: collect = function(creditor, debtors) {
+  let collect = function(creditor, debtors) {
     actualCreditorAmount = creditor.pay;
     credAccum = 0;
     debtors.map(debtor => toPay(debtor, creditor));
     return creditor; //construir un objeto custom para output.
   };
 
-  $: toPay = function(debtor, creditor) {
+  let toPay = function(debtor, creditor) {
     //no actualizar listas hacerlas const (inmutables?)
-    credAccum += debtor.pay;
     const credAmount = creditor.pay;
-    let yetToPay = credAccum + credAmount;
-    if (yetToPay > 0 && yetToPay < individualPayment) {
-      let payment = debtor.pay - yetToPay;
-      actualCreditorAmount += payment;
-      //creditor.pay += payment;
-      if (creditor.hasOwnProperty("debtors")) {
-        creditor.debtors.push({ ...debtor, payment: payment });
-      } else {
-        creditor["debtors"] = [{ ...debtor, payment: payment }];
+    if (debtor.pay > 0 && actualCreditorAmount < 0) {
+      credAccum += debtor.pay;
+      let yetToPay = credAccum + credAmount;
+      if (yetToPay > 0 && yetToPay < individualPayment) {
+        let payment = debtor.pay - yetToPay;
+        setBalance(creditor, debtor, payment);
+      } else if (debtor.pay < individualPayment) {
+        setBalance(creditor, debtor, debtor.pay);
+      } else if (yetToPay <= 0) {
+        setBalance(creditor, debtor, individualPayment);
       }
-    } else if (debtor.pay < individualPayment) {
-      actualCreditorAmount += debtor.pay;
-      //creditor.pay += debtor.pay;
-      creditor["debtors"] = [{ ...debtor, payment: debtor.pay }];
-    } else if (yetToPay <= 0) {
-      //creditor.pay += debtor.pay;
-      actualCreditorAmount = individualPayment;
-      creditor["debtors"] = [{ ...debtor, payment: individualPayment }];
     }
   };
 
-  $: generateOutput = function() {};
+  let setBalance = function(creditor, debtor, payment) {
+    creditor.pay += payment;
+    actualCreditorAmount = creditor.pay;
+    generateOutput(creditor, debtor, payment);
+  };
+
+  let generateOutput = function(creditor, debtor, payment) {
+    if (creditor.hasOwnProperty("debtors")) {
+      creditor.debtors.push({ ...debtor, payment: payment });
+    } else {
+      creditor["debtors"] = [{ ...debtor, payment: payment }];
+    }
+  };
 </script>
 
 <style>
@@ -270,7 +274,10 @@
         in:receive={{ key: payment.id }}
         out:send={{ key: payment.id }}
         animate:flip>
-        <input type="checkbox" bind:checked={payment.done} />
+        <input
+          type="checkbox"
+          bind:checked={payment.done}
+          on:click={calculate()} />
         {payment.name + ': ' + payment.pay}
         <button class="badge" on:click={() => remove(payment)}>X</button>
       </label>
@@ -284,13 +291,16 @@
         in:receive={{ key: payment.id }}
         out:send={{ key: payment.id }}
         animate:flip>
-        <input type="checkbox" bind:checked={payment.done} />
+        <input
+          type="checkbox"
+          bind:checked={payment.done}
+          on:click={calculate} />
         {payment.name + ': ' + payment.pay}
         <button class="badge" on:click={() => remove(payment)}>X</button>
       </label>
     {/each}
   </div>
-
-  <Results {...calculate()} />
-
+  {#if payments.filter(p => p.done).length > 0}
+    <Results {...calculate()} />
+  {/if}
 </div>
