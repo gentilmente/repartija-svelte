@@ -31,7 +31,7 @@
       le deben pagar
     </div>
     {#each item.debtors as d}
-      <div class="debtors">{d.name + ': ' + d.pay}</div>
+      <div class="debtors">{d.name + ': ' + d.payment}</div>
     {/each}
   {/each}
 

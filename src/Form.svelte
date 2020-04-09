@@ -74,28 +74,28 @@
     }
   ];
 
-  let results = [
+/*   let result = [
     {
       id: 2,
       name: "Martin",
-      debtorss: [
-        { id: 3, name: "Bufarra", pay: 101 },
-        { id: 3, name: "Pedro", pay: 141 },
-        { id: 3, name: "Cachi", pay: 141 },
-        { id: 3, name: "Eze", pay: 76 }
+      debtors: [
+        { id: 3, name: "Bufarra", pay: 101, payment: 33 },
+        { id: 3, name: "Pedro", pay: 141, payment: 33 },
+        { id: 3, name: "Cachi", pay: 141, payment: 33 },
+        { id: 3, name: "Eze", pay: 76, payment: 33 }
       ]
     },
     {
       name: "Gisela",
-      debtorss: [{ name: "Eze", pay: 54 }]
+      debtors: [{ name: "Eze", pay: 54, payment: 33 }]
     },
 
     {
       name: "Joni",
-      debtorss: [{ name: "Eze", pay: 11 }]
+      debtors: [{ name: "Eze", pay: 11, payment: 33 }]
     }
   ];
-
+ */
   function add() {
     let uid = payments.length + 1;
     const payment = {
@@ -152,25 +152,31 @@
     actualCreditorAmount = creditor.pay;
     credAccum = 0;
     debtors.map(debtor => toPay(debtor, creditor));
-    return { ...creditor, debtors };
+    return creditor; //construir un objeto custom para output.
   };
 
   $: toPay = function(debtor, creditor) {
+    //no actualizar listas hacerlas const (inmutables?)
     credAccum += debtor.pay;
-    let yetToPay = credAccum + creditor.pay;
+    const credAmount = creditor.pay;
+    let yetToPay = credAccum + credAmount;
     if (yetToPay > 0 && yetToPay < individualPayment) {
       let payment = debtor.pay - yetToPay;
-      debtor.pay = yetToPay;
+      actualCreditorAmount += payment;
       creditor.pay += payment;
-      actualCreditorAmount = creditor.pay;
+      if (creditor.hasOwnProperty("debtors")) {
+        creditor.debtors.push({ ...debtor, payment: payment });
+      } else {
+        creditor["debtors"] = [{ ...debtor, payment: payment }];
+      }
     } else if (debtor.pay < individualPayment) {
-      debtor.pay = yetToPay;
+      actualCreditorAmount += debtor.pay;
       creditor.pay += debtor.pay;
-      actualCreditorAmount = creditor.pay;
+      creditor["debtors"] = [{ ...debtor, payment: debtor.pay }];
     } else if (yetToPay <= 0) {
-      debtor.pay = yetToPay;
       creditor.pay += debtor.pay;
       actualCreditorAmount = individualPayment;
+      creditor["debtors"] = [{ ...debtor, payment: individualPayment }];
     }
   };
 </script>

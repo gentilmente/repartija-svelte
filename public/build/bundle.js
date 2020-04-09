@@ -1027,7 +1027,7 @@ var app = (function () {
     // (33:4) {#each item.debtors as d}
     function create_each_block_1(ctx) {
     	let div;
-    	let t_value = /*d*/ ctx[6].name + ": " + /*d*/ ctx[6].pay + "";
+    	let t_value = /*d*/ ctx[6].name + ": " + /*d*/ ctx[6].payment + "";
     	let t;
 
     	const block = {
@@ -1042,7 +1042,7 @@ var app = (function () {
     			append_dev(div, t);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*result*/ 4 && t_value !== (t_value = /*d*/ ctx[6].name + ": " + /*d*/ ctx[6].pay + "")) set_data_dev(t, t_value);
+    			if (dirty & /*result*/ 4 && t_value !== (t_value = /*d*/ ctx[6].name + ": " + /*d*/ ctx[6].payment + "")) set_data_dev(t, t_value);
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(div);
@@ -1209,8 +1209,8 @@ var app = (function () {
     			add_location(h1, file$1, 23, 0, 407);
     			attr_dev(div, "class", "box svelte-9f1d9");
     			add_location(div, file$1, 24, 0, 427);
-    			add_location(br0, file$1, 38, 0, 663);
-    			add_location(br1, file$1, 39, 0, 670);
+    			add_location(br0, file$1, 38, 0, 667);
+    			add_location(br1, file$1, 39, 0, 674);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -1393,26 +1393,26 @@ var app = (function () {
 
     function get_each_context$1(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[24] = list[i];
-    	child_ctx[25] = list;
-    	child_ctx[26] = i;
+    	child_ctx[23] = list[i];
+    	child_ctx[24] = list;
+    	child_ctx[25] = i;
     	return child_ctx;
     }
 
     function get_each_context_1$1(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[24] = list[i];
-    	child_ctx[27] = list;
-    	child_ctx[28] = i;
+    	child_ctx[23] = list[i];
+    	child_ctx[26] = list;
+    	child_ctx[27] = i;
     	return child_ctx;
     }
 
-    // (261:4) {#each payments.filter(t => !t.done) as payment (payment.id)}
+    // (267:4) {#each payments.filter(t => !t.done) as payment (payment.id)}
     function create_each_block_1$1(key_1, ctx) {
     	let label;
     	let input;
     	let t0;
-    	let t1_value = /*payment*/ ctx[24].name + ": " + /*payment*/ ctx[24].pay + "";
+    	let t1_value = /*payment*/ ctx[23].name + ": " + /*payment*/ ctx[23].pay + "";
     	let t1;
     	let t2;
     	let button;
@@ -1425,11 +1425,11 @@ var app = (function () {
     	let dispose;
 
     	function input_change_handler() {
-    		/*input_change_handler*/ ctx[20].call(input, /*payment*/ ctx[24]);
+    		/*input_change_handler*/ ctx[19].call(input, /*payment*/ ctx[23]);
     	}
 
     	function click_handler(...args) {
-    		return /*click_handler*/ ctx[21](/*payment*/ ctx[24], ...args);
+    		return /*click_handler*/ ctx[20](/*payment*/ ctx[23], ...args);
     	}
 
     	const block = {
@@ -1446,17 +1446,17 @@ var app = (function () {
     			t4 = space();
     			attr_dev(input, "type", "checkbox");
     			attr_dev(input, "class", "svelte-1iv5a0i");
-    			add_location(input, file$2, 265, 8, 5380);
+    			add_location(input, file$2, 271, 8, 5824);
     			attr_dev(button, "class", "badge svelte-1iv5a0i");
-    			add_location(button, file$2, 267, 8, 5486);
+    			add_location(button, file$2, 273, 8, 5930);
     			attr_dev(label, "class", "svelte-1iv5a0i");
-    			add_location(label, file$2, 261, 6, 5263);
+    			add_location(label, file$2, 267, 6, 5707);
     			this.first = label;
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, label, anchor);
     			append_dev(label, input);
-    			input.checked = /*payment*/ ctx[24].done;
+    			input.checked = /*payment*/ ctx[23].done;
     			append_dev(label, t0);
     			append_dev(label, t1);
     			append_dev(label, t2);
@@ -1473,10 +1473,10 @@ var app = (function () {
     			ctx = new_ctx;
 
     			if (dirty & /*payments*/ 1) {
-    				input.checked = /*payment*/ ctx[24].done;
+    				input.checked = /*payment*/ ctx[23].done;
     			}
 
-    			if ((!current || dirty & /*payments*/ 1) && t1_value !== (t1_value = /*payment*/ ctx[24].name + ": " + /*payment*/ ctx[24].pay + "")) set_data_dev(t1, t1_value);
+    			if ((!current || dirty & /*payments*/ 1) && t1_value !== (t1_value = /*payment*/ ctx[23].name + ": " + /*payment*/ ctx[23].pay + "")) set_data_dev(t1, t1_value);
     		},
     		r: function measure() {
     			rect = label.getBoundingClientRect();
@@ -1495,7 +1495,7 @@ var app = (function () {
 
     			add_render_callback(() => {
     				if (label_outro) label_outro.end(1);
-    				if (!label_intro) label_intro = create_in_transition(label, /*receive*/ ctx[5], { key: /*payment*/ ctx[24].id });
+    				if (!label_intro) label_intro = create_in_transition(label, /*receive*/ ctx[5], { key: /*payment*/ ctx[23].id });
     				label_intro.start();
     			});
 
@@ -1503,7 +1503,7 @@ var app = (function () {
     		},
     		o: function outro(local) {
     			if (label_intro) label_intro.invalidate();
-    			label_outro = create_out_transition(label, /*send*/ ctx[4], { key: /*payment*/ ctx[24].id });
+    			label_outro = create_out_transition(label, /*send*/ ctx[4], { key: /*payment*/ ctx[23].id });
     			current = false;
     		},
     		d: function destroy(detaching) {
@@ -1517,19 +1517,19 @@ var app = (function () {
     		block,
     		id: create_each_block_1$1.name,
     		type: "each",
-    		source: "(261:4) {#each payments.filter(t => !t.done) as payment (payment.id)}",
+    		source: "(267:4) {#each payments.filter(t => !t.done) as payment (payment.id)}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (275:4) {#each payments.filter(t => t.done) as payment (payment.id)}
+    // (281:4) {#each payments.filter(t => t.done) as payment (payment.id)}
     function create_each_block$1(key_1, ctx) {
     	let label;
     	let input;
     	let t0;
-    	let t1_value = /*payment*/ ctx[24].name + ": " + /*payment*/ ctx[24].pay + "";
+    	let t1_value = /*payment*/ ctx[23].name + ": " + /*payment*/ ctx[23].pay + "";
     	let t1;
     	let t2;
     	let button;
@@ -1542,11 +1542,11 @@ var app = (function () {
     	let dispose;
 
     	function input_change_handler_1() {
-    		/*input_change_handler_1*/ ctx[22].call(input, /*payment*/ ctx[24]);
+    		/*input_change_handler_1*/ ctx[21].call(input, /*payment*/ ctx[23]);
     	}
 
     	function click_handler_1(...args) {
-    		return /*click_handler_1*/ ctx[23](/*payment*/ ctx[24], ...args);
+    		return /*click_handler_1*/ ctx[22](/*payment*/ ctx[23], ...args);
     	}
 
     	const block = {
@@ -1563,17 +1563,17 @@ var app = (function () {
     			t4 = space();
     			attr_dev(input, "type", "checkbox");
     			attr_dev(input, "class", "svelte-1iv5a0i");
-    			add_location(input, file$2, 279, 8, 5818);
+    			add_location(input, file$2, 285, 8, 6262);
     			attr_dev(button, "class", "badge svelte-1iv5a0i");
-    			add_location(button, file$2, 281, 8, 5924);
+    			add_location(button, file$2, 287, 8, 6368);
     			attr_dev(label, "class", "svelte-1iv5a0i");
-    			add_location(label, file$2, 275, 6, 5701);
+    			add_location(label, file$2, 281, 6, 6145);
     			this.first = label;
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, label, anchor);
     			append_dev(label, input);
-    			input.checked = /*payment*/ ctx[24].done;
+    			input.checked = /*payment*/ ctx[23].done;
     			append_dev(label, t0);
     			append_dev(label, t1);
     			append_dev(label, t2);
@@ -1590,10 +1590,10 @@ var app = (function () {
     			ctx = new_ctx;
 
     			if (dirty & /*payments*/ 1) {
-    				input.checked = /*payment*/ ctx[24].done;
+    				input.checked = /*payment*/ ctx[23].done;
     			}
 
-    			if ((!current || dirty & /*payments*/ 1) && t1_value !== (t1_value = /*payment*/ ctx[24].name + ": " + /*payment*/ ctx[24].pay + "")) set_data_dev(t1, t1_value);
+    			if ((!current || dirty & /*payments*/ 1) && t1_value !== (t1_value = /*payment*/ ctx[23].name + ": " + /*payment*/ ctx[23].pay + "")) set_data_dev(t1, t1_value);
     		},
     		r: function measure() {
     			rect = label.getBoundingClientRect();
@@ -1612,7 +1612,7 @@ var app = (function () {
 
     			add_render_callback(() => {
     				if (label_outro) label_outro.end(1);
-    				if (!label_intro) label_intro = create_in_transition(label, /*receive*/ ctx[5], { key: /*payment*/ ctx[24].id });
+    				if (!label_intro) label_intro = create_in_transition(label, /*receive*/ ctx[5], { key: /*payment*/ ctx[23].id });
     				label_intro.start();
     			});
 
@@ -1620,7 +1620,7 @@ var app = (function () {
     		},
     		o: function outro(local) {
     			if (label_intro) label_intro.invalidate();
-    			label_outro = create_out_transition(label, /*send*/ ctx[4], { key: /*payment*/ ctx[24].id });
+    			label_outro = create_out_transition(label, /*send*/ ctx[4], { key: /*payment*/ ctx[23].id });
     			current = false;
     		},
     		d: function destroy(detaching) {
@@ -1634,7 +1634,7 @@ var app = (function () {
     		block,
     		id: create_each_block$1.name,
     		type: "each",
-    		source: "(275:4) {#each payments.filter(t => t.done) as payment (payment.id)}",
+    		source: "(281:4) {#each payments.filter(t => t.done) as payment (payment.id)}",
     		ctx
     	});
 
@@ -1670,12 +1670,12 @@ var app = (function () {
 
     	function input1_input_handler() {
     		input1_updating = true;
-    		/*input1_input_handler*/ ctx[19].call(input1);
+    		/*input1_input_handler*/ ctx[18].call(input1);
     	}
 
     	let each_value_1 = /*payments*/ ctx[0].filter(func);
     	validate_each_argument(each_value_1);
-    	const get_key = ctx => /*payment*/ ctx[24].id;
+    	const get_key = ctx => /*payment*/ ctx[23].id;
     	validate_each_keys(ctx, each_value_1, get_each_context_1$1, get_key);
 
     	for (let i = 0; i < each_value_1.length; i += 1) {
@@ -1686,7 +1686,7 @@ var app = (function () {
 
     	let each_value = /*payments*/ ctx[0].filter(func_1);
     	validate_each_argument(each_value);
-    	const get_key_1 = ctx => /*payment*/ ctx[24].id;
+    	const get_key_1 = ctx => /*payment*/ ctx[23].id;
     	validate_each_keys(ctx, each_value, get_each_context$1, get_key_1);
 
     	for (let i = 0; i < each_value.length; i += 1) {
@@ -1695,14 +1695,14 @@ var app = (function () {
     		each1_lookup.set(key, each_blocks[i] = create_each_block$1(key, child_ctx));
     	}
 
-    	const results_1_spread_levels = [/*calculate*/ ctx[3]()];
-    	let results_1_props = {};
+    	const results_spread_levels = [/*calculate*/ ctx[3]()];
+    	let results_props = {};
 
-    	for (let i = 0; i < results_1_spread_levels.length; i += 1) {
-    		results_1_props = assign(results_1_props, results_1_spread_levels[i]);
+    	for (let i = 0; i < results_spread_levels.length; i += 1) {
+    		results_props = assign(results_props, results_spread_levels[i]);
     	}
 
-    	const results_1 = new Results({ props: results_1_props, $$inline: true });
+    	const results = new Results({ props: results_props, $$inline: true });
 
     	const block = {
     		c: function create() {
@@ -1736,32 +1736,32 @@ var app = (function () {
     			}
 
     			t8 = space();
-    			create_component(results_1.$$.fragment);
+    			create_component(results.$$.fragment);
     			attr_dev(input0, "type", "text");
     			attr_dev(input0, "placeholder", "Nombre");
     			attr_dev(input0, "class", "svelte-1iv5a0i");
-    			add_location(input0, file$2, 249, 4, 4899);
-    			add_location(div0, file$2, 248, 2, 4889);
+    			add_location(input0, file$2, 255, 4, 5343);
+    			add_location(div0, file$2, 254, 2, 5333);
     			attr_dev(input1, "type", "number");
     			attr_dev(input1, "placeholder", "¿cuánto gastó?");
     			attr_dev(input1, "class", "svelte-1iv5a0i");
-    			add_location(input1, file$2, 252, 4, 4981);
-    			add_location(div1, file$2, 251, 2, 4971);
+    			add_location(input1, file$2, 258, 4, 5425);
+    			add_location(div1, file$2, 257, 2, 5415);
     			attr_dev(input2, "type", "button");
     			input2.value = "Agregar al listado";
     			attr_dev(input2, "class", "svelte-1iv5a0i");
-    			add_location(input2, file$2, 255, 4, 5072);
-    			add_location(div2, file$2, 254, 2, 5062);
+    			add_location(input2, file$2, 261, 4, 5516);
+    			add_location(div2, file$2, 260, 2, 5506);
     			attr_dev(h20, "class", "svelte-1iv5a0i");
-    			add_location(h20, file$2, 259, 4, 5173);
+    			add_location(h20, file$2, 265, 4, 5617);
     			attr_dev(div3, "class", "left svelte-1iv5a0i");
-    			add_location(div3, file$2, 258, 2, 5150);
+    			add_location(div3, file$2, 264, 2, 5594);
     			attr_dev(h21, "class", "svelte-1iv5a0i");
-    			add_location(h21, file$2, 273, 4, 5615);
+    			add_location(h21, file$2, 279, 4, 6059);
     			attr_dev(div4, "class", "right svelte-1iv5a0i");
-    			add_location(div4, file$2, 272, 2, 5591);
+    			add_location(div4, file$2, 278, 2, 6035);
     			attr_dev(div5, "class", "board svelte-1iv5a0i");
-    			add_location(div5, file$2, 247, 0, 4867);
+    			add_location(div5, file$2, 253, 0, 5311);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -1797,11 +1797,11 @@ var app = (function () {
     			}
 
     			append_dev(div5, t8);
-    			mount_component(results_1, div5, null);
+    			mount_component(results, div5, null);
     			current = true;
 
     			dispose = [
-    				listen_dev(input0, "input", /*input0_input_handler*/ ctx[18]),
+    				listen_dev(input0, "input", /*input0_input_handler*/ ctx[17]),
     				listen_dev(input1, "input", input1_input_handler),
     				listen_dev(input2, "click", /*add*/ ctx[6], false, false, false)
     			];
@@ -1839,11 +1839,11 @@ var app = (function () {
     				check_outros();
     			}
 
-    			const results_1_changes = (dirty & /*calculate*/ 8)
-    			? get_spread_update(results_1_spread_levels, [get_spread_object(/*calculate*/ ctx[3]())])
+    			const results_changes = (dirty & /*calculate*/ 8)
+    			? get_spread_update(results_spread_levels, [get_spread_object(/*calculate*/ ctx[3]())])
     			: {};
 
-    			results_1.$set(results_1_changes);
+    			results.$set(results_changes);
     		},
     		i: function intro(local) {
     			if (current) return;
@@ -1856,7 +1856,7 @@ var app = (function () {
     				transition_in(each_blocks[i]);
     			}
 
-    			transition_in(results_1.$$.fragment, local);
+    			transition_in(results.$$.fragment, local);
     			current = true;
     		},
     		o: function outro(local) {
@@ -1868,7 +1868,7 @@ var app = (function () {
     				transition_out(each_blocks[i]);
     			}
 
-    			transition_out(results_1.$$.fragment, local);
+    			transition_out(results.$$.fragment, local);
     			current = false;
     		},
     		d: function destroy(detaching) {
@@ -1882,7 +1882,7 @@ var app = (function () {
     				each_blocks[i].d();
     			}
 
-    			destroy_component(results_1);
+    			destroy_component(results);
     			run_all(dispose);
     		}
     	};
@@ -1957,27 +1957,28 @@ var app = (function () {
     		{ id: 7, done: true, name: "Eze", pay: 0 }
     	];
 
-    	let results = [
-    		{
-    			id: 2,
-    			name: "Martin",
-    			debtorss: [
-    				{ id: 3, name: "Bufarra", pay: 101 },
-    				{ id: 3, name: "Pedro", pay: 141 },
-    				{ id: 3, name: "Cachi", pay: 141 },
-    				{ id: 3, name: "Eze", pay: 76 }
-    			]
-    		},
-    		{
-    			name: "Gisela",
-    			debtorss: [{ name: "Eze", pay: 54 }]
-    		},
-    		{
-    			name: "Joni",
-    			debtorss: [{ name: "Eze", pay: 11 }]
-    		}
-    	];
+    	/*   let result = [
+        {
+          id: 2,
+          name: "Martin",
+          debtors: [
+            { id: 3, name: "Bufarra", pay: 101, payment: 33 },
+            { id: 3, name: "Pedro", pay: 141, payment: 33 },
+            { id: 3, name: "Cachi", pay: 141, payment: 33 },
+            { id: 3, name: "Eze", pay: 76, payment: 33 }
+          ]
+        },
+        {
+          name: "Gisela",
+          debtors: [{ name: "Eze", pay: 54, payment: 33 }]
+        },
 
+        {
+          name: "Joni",
+          debtors: [{ name: "Eze", pay: 11, payment: 33 }]
+        }
+      ];
+     */
     	function add() {
     		let uid = payments.length + 1;
     		const payment = { id: uid++, done: false, name, pay };
@@ -2036,7 +2037,6 @@ var app = (function () {
     		debtorss,
     		credAccum,
     		actualCreditorAmount,
-    		results,
     		add,
     		remove,
     		calculate,
@@ -2055,7 +2055,6 @@ var app = (function () {
     		if ("debtorss" in $$props) debtorss = $$props.debtorss;
     		if ("credAccum" in $$props) $$invalidate(10, credAccum = $$props.credAccum);
     		if ("actualCreditorAmount" in $$props) actualCreditorAmount = $$props.actualCreditorAmount;
-    		if ("results" in $$props) results = $$props.results;
     		if ("calculate" in $$props) $$invalidate(3, calculate = $$props.calculate);
     		if ("prepareDataSet" in $$props) $$invalidate(12, prepareDataSet = $$props.prepareDataSet);
     		if ("devideList" in $$props) $$invalidate(13, devideList = $$props.devideList);
@@ -2091,24 +2090,32 @@ var app = (function () {
     			});
     		}
 
-    		if ($$self.$$.dirty & /*credAccum, individualPayment*/ 1536) {
+    		if ($$self.$$.dirty & /*credAccum, individualPayment, actualCreditorAmount*/ 3584) {
     			 $$invalidate(15, toPay = function (debtor, creditor) {
+    				//no actualizar listas hacerlas const (inmutables?)
     				$$invalidate(10, credAccum += debtor.pay);
-    				let yetToPay = credAccum + creditor.pay;
+
+    				const credAmount = creditor.pay;
+    				let yetToPay = credAccum + credAmount;
 
     				if (yetToPay > 0 && yetToPay < individualPayment) {
     					let payment = debtor.pay - yetToPay;
-    					debtor.pay = yetToPay;
+    					actualCreditorAmount += payment;
     					creditor.pay += payment;
-    					actualCreditorAmount = creditor.pay;
+
+    					if (creditor.hasOwnProperty("debtors")) {
+    						creditor.debtors.push({ ...debtor, payment });
+    					} else {
+    						creditor["debtors"] = [{ ...debtor, payment }];
+    					}
     				} else if (debtor.pay < individualPayment) {
-    					debtor.pay = yetToPay;
+    					actualCreditorAmount += debtor.pay;
     					creditor.pay += debtor.pay;
-    					actualCreditorAmount = creditor.pay;
+    					creditor["debtors"] = [{ ...debtor, payment: debtor.pay }];
     				} else if (yetToPay <= 0) {
-    					debtor.pay = yetToPay;
     					creditor.pay += debtor.pay;
     					actualCreditorAmount = individualPayment;
+    					creditor["debtors"] = [{ ...debtor, payment: individualPayment }];
     				}
     			});
     		}
@@ -2118,7 +2125,7 @@ var app = (function () {
     				actualCreditorAmount = creditor.pay;
     				$$invalidate(10, credAccum = 0);
     				debtors.map(debtor => toPay(debtor, creditor));
-    				return { ...creditor, debtors };
+    				return creditor; //construir un objeto custom para output.
     			});
     		}
 
@@ -2158,7 +2165,6 @@ var app = (function () {
     		collect,
     		toPay,
     		debtorss,
-    		results,
     		input0_input_handler,
     		input1_input_handler,
     		input_change_handler,
