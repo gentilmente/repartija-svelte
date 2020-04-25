@@ -21,57 +21,17 @@
   });
 
   let payments = [];
-  let total;
-  let individualPayment = 0;
   let name = "";
   let pay;
-  let debtorss = [];
-  let credAccum;
-  let actualCreditorAmount;
 
   payments = [
-    {
-      id: 1,
-      done: true,
-      name: "Bufarra",
-      pay: 40
-    },
-    {
-      id: 2,
-      done: true,
-      name: "Martin",
-      pay: 600
-    },
-    {
-      id: 3,
-      done: true,
-      name: "Joni",
-      pay: 150
-    },
-    {
-      id: 4,
-      done: true,
-      name: "Pedro",
-      pay: 0
-    },
-    {
-      id: 5,
-      done: true,
-      name: "Cachi",
-      pay: 0
-    },
-    {
-      id: 6,
-      done: true,
-      name: "Gisela",
-      pay: 200
-    },
-    {
-      id: 7,
-      done: true,
-      name: "Eze",
-      pay: 0
-    }
+    { id: 1, done: true, name: "Bufarra", pay: 40 },
+    { id: 2, done: true, name: "Martin", pay: 600 },
+    { id: 3, done: true, name: "Joni", pay: 150 },
+    { id: 4, done: true, name: "Pedro", pay: 0 },
+    { id: 5, done: true, name: "Cachi", pay: 0 },
+    { id: 6, done: true, name: "Gisela", pay: 200 },
+    { id: 7, done: true, name: "Eze", pay: 0 }
   ];
 
   /* let result = [
@@ -102,7 +62,7 @@
       id: uid++,
       done: false,
       name: name,
-      pay: pay
+      pay: pay //make it number
     };
     payments = [payment, ...payments];
   }
@@ -112,30 +72,38 @@
   }
 
   $: calculate = function() {
-    let result = [];
-    let balance = prepareDataSet();
+    const output = { total: 0, individualPayment: 0, result: [] };
+    let balance = arrangeInitialConditions(output);
     let { creditors, debtors } = devideList(balance);
 
-    result = creditors.map(cred => collect(cred, debtors));
-    console.log(result);
-    return {
-      total,
-      individualPayment,
-      result
-    };
+    output.result = creditors.map(creditor => {
+      debtors.map(debtor => {
+        if (debtor.pay > 0 && creditor.pay < 0) {
+          const payment = getDebtorPayment(debtor, creditor.pay);
+          debtor.pay -= payment;
+          creditor.pay += payment;
+          composeOutputObj(creditor, debtor, payment);
+        }
+      });
+      return creditor;
+    });
+
+    console.log(output);
+    //generateOutput(output);
+    return output;
   };
 
-  function prepareDataSet() {
+  function arrangeInitialConditions(output) {
     let payers = payments.filter(t => t.done);
-    total = payers.reduce((a, b) => a + (b["pay"] || 0), 0);
-    individualPayment = Math.round(total / payers.length);
+    output.total = payers.reduce((acc, curr) => acc + (curr.pay || 0), 0);
+    output.individualPayment = Math.round(output.total / payers.length);
     return payers.map(payment => {
       return {
         ...payment, //spread all props to new object except the one you need to change
-        pay: individualPayment - payment.pay
+        pay: output.individualPayment - payment.pay
       };
     });
-  };
+  }
 
   function devideList(balance) {
     return {
@@ -146,45 +114,21 @@
         .filter(e => e.pay >= 0)
         .sort((a, b) => (a.pay > b.pay ? -1 : 1))
     };
-  };
+  }
 
-  function collect(creditor, debtors) {
-    actualCreditorAmount = creditor.pay;
-    credAccum = 0;
-    debtors.map(debtor => toPay(debtor, creditor));
-    return creditor; //construir un objeto custom para output.
-  };
+  function getDebtorPayment(debtor, yetToPay) {
+    const willCreditorStillOwed = debtor.pay + yetToPay < 0;
+    return willCreditorStillOwed ? debtor.pay : yetToPay * -1;
+  }
 
-  function toPay(debtor, creditor) {
-    //no actualizar listas hacerlas const (inmutables?)
-    const credAmount = creditor.pay;
-    if (debtor.pay > 0 && actualCreditorAmount < 0) {
-      credAccum += debtor.pay;
-      let yetToPay = credAccum + credAmount;
-      if (yetToPay > 0 && yetToPay < individualPayment) {
-        let payment = debtor.pay - yetToPay;
-        setBalance(creditor, debtor, payment);
-      } else if (debtor.pay < individualPayment) {
-        setBalance(creditor, debtor, debtor.pay);
-      } else if (yetToPay <= 0) {
-        setBalance(creditor, debtor, individualPayment);
-      }
-    }
-  };
-
-  function setBalance(creditor, debtor, payment) {
-    creditor.pay += payment;
-    actualCreditorAmount = creditor.pay;
-    generateOutput(creditor, debtor, payment);
-  };
-
-  function generateOutput(creditor, debtor, payment) {
+  function composeOutputObj(creditor, debtor, payment) {
+    const obj = { payment: Math.round(payment), ...debtor };
     if (creditor.hasOwnProperty("debtors")) {
-      creditor.debtors.push({ ...debtor, payment: payment });
+      creditor.debtors.push(obj);
     } else {
-      creditor["debtors"] = [{ ...debtor, payment: payment }];
+      creditor["debtors"] = [obj];
     }
-  };
+  }
 </script>
 
 <style>
