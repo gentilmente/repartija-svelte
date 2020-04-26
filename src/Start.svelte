@@ -1,18 +1,8 @@
-<main>
-  <p>Comenzá y pasale el 📲 al de tu izq y que se agregue,
-    así hasta que vuelva a vos,
-    colocas tus datos y deslizás "soy el último",
-    luego al agregarte verás la magia 👻 </p>
-
-  <button on:click><span>comenzar </span></button>
-
-</main>
-
 <style>
   main {
     -moz-transition-duration: 0.5s;
     -webkit-transition-duration: 0.5s;
-    font-family: 'Satisfy', Helvetica, cursive;
+    font-family: "Satisfy", Helvetica, cursive;
     text-shadow: 1px 1px 7px black;
   }
 
@@ -21,7 +11,7 @@
     border-radius: 4px;
     background-color: #f4511e;
     border: none;
-    color: #FFFFFF;
+    color: #ffffff;
     text-align: center;
     font-size: 28px;
     padding: 20px;
@@ -39,7 +29,7 @@
   }
 
   button span:after {
-    content: '\00bb';
+    content: "\00bb";
     position: absolute;
     opacity: 0;
     top: 0;
@@ -56,3 +46,13 @@
     right: 0;
   }
 </style>
+
+<main>
+  <br />
+  <p>Comenzá y pasá el celular</p>
+  <p>hasta que se agreguen todes</p>
+  <button on:click>
+    <span>comenzar</span>
+  </button>
+
+</main>
