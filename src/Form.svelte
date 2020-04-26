@@ -29,7 +29,7 @@
     { id: 2, done: true, name: "Martin", pay: 600 },
     { id: 3, done: true, name: "Joni", pay: 150 },
     { id: 4, done: true, name: "Pedro", pay: 0 },
-    { id: 5, done: true, name: "Cachi", pay: 0 },
+    { id: 5, done: false, name: "Cachi", pay: 0 },
     { id: 6, done: true, name: "Gisela", pay: 200 },
     { id: 7, done: true, name: "Eze", pay: 0 }
   ];
@@ -93,7 +93,7 @@
     return output;
   };
 
-  function arrangeInitialConditions(output) {
+  $: arrangeInitialConditions = function(output) {
     let payers = payments.filter(t => t.done);
     output.total = payers.reduce((acc, curr) => acc + (curr.pay || 0), 0);
     output.individualPayment = Math.round(output.total / payers.length);
@@ -103,9 +103,9 @@
         pay: output.individualPayment - payment.pay
       };
     });
-  }
+  };
 
-  function devideList(balance) {
+  $: devideList = function(balance) {
     return {
       creditors: balance
         .filter(e => e.pay < 0)
@@ -114,21 +114,21 @@
         .filter(e => e.pay >= 0)
         .sort((a, b) => (a.pay > b.pay ? -1 : 1))
     };
-  }
+  };
 
-  function getDebtorPayment(debtor, yetToPay) {
+  $: getDebtorPayment = function(debtor, yetToPay) {
     const willCreditorStillOwed = debtor.pay + yetToPay < 0;
     return willCreditorStillOwed ? debtor.pay : yetToPay * -1;
-  }
+  };
 
-  function composeOutputObj(creditor, debtor, payment) {
+  $: composeOutputObj = function(creditor, debtor, payment) {
     const obj = { payment: Math.round(payment), ...debtor };
     if (creditor.hasOwnProperty("debtors")) {
       creditor.debtors.push(obj);
     } else {
       creditor["debtors"] = [obj];
     }
-  }
+  };
 </script>
 
 <style>
