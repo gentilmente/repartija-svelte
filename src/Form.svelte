@@ -153,7 +153,7 @@
   }
 
   button {
-    font-size: 21px;
+    font-size: 20px;
   }
 
   .left,
@@ -245,7 +245,7 @@
       </label>
     {/each}
   </div>
-  
+
   {#if payments.filter(p => p.done).length > 0}
     <Results {...calculate()} />
   {/if}
