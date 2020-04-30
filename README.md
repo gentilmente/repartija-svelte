@@ -2,6 +2,8 @@
 go dutch 
 
 to do:
-.validate inputs
-.clean after add
-.rounded mmoney issue
+- only one reactive func
+- validate inputs
+- clean after add
+- rounded mmoney issue
+- ~~iOS button appears rounded corners (?)~~

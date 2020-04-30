@@ -24,7 +24,7 @@
   let name = "";
   let pay;
 
-/*   payments = [
+  /*   payments = [
     { id: 1, done: true, name: "Bufarra", pay: 40 },
     { id: 2, done: true, name: "Martin", pay: 600 },
     { id: 3, done: true, name: "Joni", pay: 150 },
@@ -88,21 +88,20 @@
       return creditor;
     });
 
+    const arrangeInitialConditions = function(output) {
+      let payers = payments.filter(t => t.done);
+      output.total = payers.reduce((acc, curr) => acc + (curr.pay || 0), 0);
+      output.individualPayment = Math.round(output.total / payers.length);
+      return payers.map(payment => {
+        return {
+          ...payment, //spread all props to new object except the one you need to change
+          pay: output.individualPayment - payment.pay
+        };
+      });
+    };
     console.log(output);
     //generateOutput(output);
     return output;
-  };
-
-  $: arrangeInitialConditions = function(output) {
-    let payers = payments.filter(t => t.done);
-    output.total = payers.reduce((acc, curr) => acc + (curr.pay || 0), 0);
-    output.individualPayment = Math.round(output.total / payers.length);
-    return payers.map(payment => {
-      return {
-        ...payment, //spread all props to new object except the one you need to change
-        pay: output.individualPayment - payment.pay
-      };
-    });
   };
 
   $: devideList = function(balance) {
@@ -148,14 +147,13 @@
     font-size: 22px;
   }
 
-  input[type="button"] {
-    background: red;
-    color: white;
-  }
-
   input[type="checkbox"] {
     margin: 0;
     display: none;
+  }
+
+  button {
+    font-size: 21px;
   }
 
   .left,
@@ -209,7 +207,9 @@
     <input type="number" placeholder="¿cuánto gastó?" bind:value={pay} />
   </div>
   <div>
-    <input type="button" value="Agregar al listado" on:click={add} />
+    <button on:click={add}>
+      <span>Agregar al listado</span>
+    </button>
   </div>
 
   <div class="left">
@@ -245,6 +245,7 @@
       </label>
     {/each}
   </div>
+  
   {#if payments.filter(p => p.done).length > 0}
     <Results {...calculate()} />
   {/if}
