@@ -17,7 +17,6 @@
     padding: 20px;
     width: 200px;
     transition: all 0.5s;
-    cursor: pointer;
     margin: 5px;
   }
 

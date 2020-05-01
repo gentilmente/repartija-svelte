@@ -88,20 +88,21 @@
       return creditor;
     });
 
-    const arrangeInitialConditions = function(output) {
-      let payers = payments.filter(t => t.done);
-      output.total = payers.reduce((acc, curr) => acc + (curr.pay || 0), 0);
-      output.individualPayment = Math.round(output.total / payers.length);
-      return payers.map(payment => {
-        return {
-          ...payment, //spread all props to new object except the one you need to change
-          pay: output.individualPayment - payment.pay
-        };
-      });
-    };
     console.log(output);
     //generateOutput(output);
     return output;
+  };
+
+  $: arrangeInitialConditions = function(output) {
+    let payers = payments.filter(t => t.done);
+    output.total = payers.reduce((acc, curr) => acc + (curr.pay || 0), 0);
+    output.individualPayment = Math.round(output.total / payers.length);
+    return payers.map(payment => {
+      return {
+        ...payment, //spread all props to new object except the one you need to change
+        pay: output.individualPayment - payment.pay
+      };
+    });
   };
 
   $: devideList = function(balance) {

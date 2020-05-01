@@ -66,6 +66,7 @@ a:hover {
 a:visited {
   text-decoration: none;
 }
+
 button span {
   cursor: pointer;
   display: inline-block;
