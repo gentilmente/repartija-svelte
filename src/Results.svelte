@@ -19,9 +19,9 @@
   }
 </style>
 
-<p class="left">total: {total}</p>
-<p class="right">pago individual: {individualPayment}</p>
-<h1>Resultado:</h1>
+<h2>Resultado:</h2>
+<p>total: {total}</p>
+<p>pago individual: {individualPayment}</p>
 <div class="box">
 
   {#each result as item}

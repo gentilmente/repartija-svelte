@@ -24,7 +24,7 @@
   let name = "";
   let pay;
 
-  /*   payments = [
+  payments = [
     { id: 1, done: true, name: "Bufarra", pay: 40 },
     { id: 2, done: true, name: "Martin", pay: 600 },
     { id: 3, done: true, name: "Joni", pay: 150 },
@@ -32,7 +32,7 @@
     { id: 5, done: false, name: "Cachi", pay: 0 },
     { id: 6, done: true, name: "Gisela", pay: 200 },
     { id: 7, done: true, name: "Eze", pay: 0 }
-  ]; */
+  ];
 
   /* let result = [
     {
@@ -132,17 +132,10 @@
 </script>
 
 <style>
-  .board {
-    max-width: 36em;
-    margin: 0 auto;
-  }
-
   input {
-    position: relative;
-    opacity: 0.8;
     margin: 10px;
     border: 0;
-    background-color: black;
+    background-color: rgba(0, 0, 0, 0.7);
     padding: 10px;
     color: white;
     font-size: 22px;
@@ -153,10 +146,6 @@
     display: none;
   }
 
-  button {
-    font-size: 20px;
-  }
-
   .left,
   .right {
     float: left;
@@ -165,30 +154,26 @@
     box-sizing: border-box;
   }
 
-  h2 {
-    font-size: 2em;
-    font-weight: 200;
-  }
-
   label {
-    top: 0;
-    left: 0;
+    border: solid;
+    border-radius: 2px;
+    border-width: 2px;
+    border-color: black;
     display: block;
     text-align: left;
     font-size: 0.9em;
-    line-height: 1;
     padding: 0.3em;
     margin: 0 auto 0.3em auto;
-    border-radius: 2px;
-    background-color: black;
-    user-select: none;
+    background-color: rgba(0, 0, 0, 0.6);
   }
 
   .right label {
-    background-color: rgb(4, 164, 4);
+    background-color: rgba(4, 164, 4, 0.2);
+    border-color: rgb(71, 155, 71);
   }
 
   button {
+    font-size: 20px;
     display: inline-block;
     border-radius: 4px;
     background-color: #f4511e;
@@ -197,7 +182,7 @@
     text-align: center;
     font-size: 21px;
     transition: all 0.5s;
-    padding: 6px;
+    padding: 10px 20px 13px 20px;
     margin-top: 10px;
   }
 
@@ -208,24 +193,24 @@
     color: white;
     border: 0px;
     padding: 0px;
-    font-size: 19px;
-    margin-top: -3px;
+    font-size: 17px;
+    margin-top: -1px;
   }
 </style>
 
 <div class="board">
-  <div>
-    <input type="text" placeholder="Nombre" bind:value={name} />
-  </div>
-  <div>
-    <input type="number" placeholder="¿cuánto gastó?" bind:value={pay} />
-  </div>
-  <div>
-    <button on:click={add}>
-      <span>Agregar al listado</span>
-    </button>
-  </div>
 
+  <input type="text" placeholder="Nombre" bind:value={name} />
+
+  <input type="number" placeholder="¿cuánto gastó?" bind:value={pay} />
+
+  <button on:click={add}>
+    <span>Agregar al listado</span>
+  </button>
+
+</div>
+
+<div class="lists">
   <div class="left">
     <h2>Vinieron</h2>
     {#each payments.filter(t => !t.done) as payment (payment.id)}
@@ -263,7 +248,9 @@
       </label>
     {/each}
   </div>
+</div>
 
+<div class="box">
   {#if payments.filter(p => p.done).length > 0}
     <Results {...calculate()} />
   {/if}

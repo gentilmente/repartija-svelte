@@ -5,21 +5,18 @@
 }
 
 html {
-  position: relative;
   background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), url("/party.jpg");
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  width: auto;
-  margin: auto;
   text-align: center;
   color: white;
   font-family: Helvetica, cursive;
   font-size: 22px;
 }
 
-h1, h2, p, li {
+h1, p.subtitle{
   text-shadow: 1px 1px 7px black;
   font-family: 'Satisfy', Helvetica, cursive;
 }
@@ -32,22 +29,12 @@ h1 {
 
 p {
   font-size: 25px;
+  margin: auto;
 }
 
 p.subtitle {
   margin-bottom: 10px;
   padding: 0px;
-}
-
-div.header {
-  overflow: hidden;
-}
-
-footer {
-  display: inline-block;
-  position: absolute;
-  right: 10px;
-  margin-top: 40px;
 }
 
 details summary::-webkit-details-marker {
@@ -59,17 +46,7 @@ a {
   text-decoration: none;
 }
 
-a:hover {
-  text-decoration: underline;
-}
-
 a:visited {
   text-decoration: none;
 }
 
-button span {
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-  transition: 0.5s;
-}
