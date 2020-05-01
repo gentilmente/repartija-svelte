@@ -21,13 +21,6 @@
     margin: 5px;
   }
 
-  button span {
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    transition: 0.5s;
-  }
-
   button span:after {
     content: "\00bb";
     position: absolute;

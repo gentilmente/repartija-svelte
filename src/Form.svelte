@@ -148,11 +148,6 @@
     font-size: 22px;
   }
 
-  input[type="button"] {
-    background: red;
-    color: white;
-  }
-
   input[type="checkbox"] {
     margin: 0;
     display: none;
@@ -186,18 +181,31 @@
   }
 
   .right label {
-    background-color: rgb(92, 160, 2);
+    background-color: rgb(4, 164, 4);
+  }
+
+  button {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #f4511e;
+    border: none;
+    color: #ffffff;
+    text-align: center;
+    font-size: 21px;
+    transition: all 0.5s;
+    padding: 6px;
+    margin-top: 10px;
   }
 
   .badge {
     float: right;
     position: relative;
-    top: -4px;
-    padding: 5px 10px;
-    border-radius: 50%;
-    background: red;
+    background: none;
     color: white;
     border: 0px;
+    padding: 0px;
+    font-size: 19px;
+    margin-top: -3px;
   }
 </style>
 
@@ -209,7 +217,9 @@
     <input type="number" placeholder="¿cuánto gastó?" bind:value={pay} />
   </div>
   <div>
-    <input type="button" value="Agregar al listado" on:click={add} />
+    <button on:click={add}>
+      <span>Agregar al listado</span>
+    </button>
   </div>
 
   <div class="left">
@@ -224,7 +234,9 @@
           bind:checked={payment.done}
           on:click={calculate()} />
         {payment.name + ': ' + payment.pay}
-        <button class="badge" on:click={() => remove(payment)}>X</button>
+        <button class="badge" on:click={() => remove(payment)}>
+          <i class="fas fa-trash-alt" />
+        </button>
       </label>
     {/each}
   </div>
@@ -241,7 +253,9 @@
           bind:checked={payment.done}
           on:click={calculate} />
         {payment.name + ': ' + payment.pay}
-        <button class="badge" on:click={() => remove(payment)}>X</button>
+        <button class="badge" on:click={() => remove(payment)}>
+          <i class="fas fa-trash-alt" />
+        </button>
       </label>
     {/each}
   </div>

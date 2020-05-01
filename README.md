@@ -2,6 +2,11 @@
 go dutch 
 
 to do:
-.validate inputs
-.clean after add
-.rounded mmoney issue
+- ~~trash icon on person added~~
+- list colors
+- input placeholder color
+- font in result
+- validate inputs
+- clean after add
+- rounded money issue
+- ~~iOS button appears rounded corners (?)~~
