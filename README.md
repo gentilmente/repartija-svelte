@@ -2,13 +2,14 @@
 go dutch 
 
 to do:
-- ~~trash icon on person added~~
-- ~~list colors~~
-- input placeholder color
-- ~~font in result~~
-- validate inputs
+- validate text input
 - clean after add
 - rounded money issue
+- ~~validate number input~~
+- ~~input placeholder color~~
+- ~~trash icon on person added~~
+- ~~list colors~~
+- ~~font in result~~
 - ~~result div issue getting inside lists div~~
 - ~~iOS button appears rounded corners (?)~~
 - ~~better results alignment~~

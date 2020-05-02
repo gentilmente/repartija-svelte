@@ -62,7 +62,7 @@
       id: uid++,
       done: false,
       name: name,
-      pay: pay //make it number
+      pay: isNaN(pay) ? 0 : parseFloat(pay)
     };
     payments = [payment, ...payments];
   }
@@ -137,6 +137,10 @@
     padding: 10px;
     color: white;
     font-size: 22px;
+  }
+
+  ::placeholder {
+    opacity: 0.7;
   }
 
   input[type="checkbox"] {
