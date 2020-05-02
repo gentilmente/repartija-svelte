@@ -3,9 +3,9 @@ go dutch
 
 to do:
 - ~~trash icon on person added~~
-- list colors
+- ~~list colors~~
 - input placeholder color
-- font in result
+- ~~font in result~~
 - validate inputs
 - clean after add
 - rounded money issue
