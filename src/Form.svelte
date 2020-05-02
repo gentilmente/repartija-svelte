@@ -24,15 +24,15 @@
   let name = "";
   let pay;
 
-/*   payments = [
+  payments = [
     { id: 1, done: true, name: "Bufarra", pay: 40 },
-    { id: 2, done: true, name: "Martin", pay: 600 },
-    { id: 3, done: true, name: "Joni", pay: 150 },
-    { id: 4, done: true, name: "Pedro", pay: 0 },
+    { id: 2, done: false, name: "Martin", pay: 600 },
+    { id: 3, done: false, name: "Joni", pay: 150 },
+    { id: 4, done: false, name: "Pedro", pay: 0 },
     { id: 5, done: false, name: "Cachi", pay: 0 },
     { id: 6, done: true, name: "Gisela", pay: 200 },
     { id: 7, done: true, name: "Eze", pay: 0 }
-  ]; */
+  ];
 
   /* let result = [
     {
@@ -144,11 +144,16 @@
     display: none;
   }
 
+  .lists{
+    display: inline-block;
+    width: 100%;
+  }
+
   .left,
   .right {
     float: left;
     width: 50%;
-    padding: 0 0.5em 0 0;
+    padding: 0 0.2em 0 0.2em;
     box-sizing: border-box;
   }
 
@@ -192,20 +197,17 @@
     border: 0px;
     padding: 0px;
     font-size: 17px;
-    margin-top: -1px;
+    margin-top: 4px;
   }
+
 </style>
 
 <div class="board">
-
   <input type="text" placeholder="Nombre" bind:value={name} />
-
   <input type="number" placeholder="¿cuánto gastó?" bind:value={pay} />
-
   <button on:click={add}>
     <span>Agregar al listado</span>
   </button>
-
 </div>
 
 <div class="lists">

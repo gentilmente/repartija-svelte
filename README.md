@@ -9,4 +9,5 @@ to do:
 - validate inputs
 - clean after add
 - rounded money issue
+- ~~result div issue getting inside lists div~~
 - ~~iOS button appears rounded corners (?)~~
