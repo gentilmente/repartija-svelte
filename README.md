@@ -11,3 +11,4 @@ to do:
 - rounded money issue
 - ~~result div issue getting inside lists div~~
 - ~~iOS button appears rounded corners (?)~~
+- ~~better results alignment~~

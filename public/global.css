@@ -27,6 +27,10 @@ h1 {
   font-size: 60px;
 }
 
+h2 {
+  margin: 0.5em 0 0.5em 0;
+}
+
 p {
   font-size: 25px;
   margin: auto;

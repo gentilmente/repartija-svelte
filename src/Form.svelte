@@ -144,7 +144,7 @@
     display: none;
   }
 
-  .lists{
+  .lists {
     display: inline-block;
     width: 100%;
   }
@@ -199,7 +199,6 @@
     font-size: 17px;
     margin-top: 4px;
   }
-
 </style>
 
 <div class="board">
@@ -250,8 +249,6 @@
   </div>
 </div>
 
-<div class="box">
-  {#if payments.filter(p => p.done).length > 0}
-    <Results {...calculate()} />
-  {/if}
-</div>
+{#if payments.filter(p => p.done).length > 0}
+  <Results {...calculate()} />
+{/if}
