@@ -134,7 +134,7 @@
   };
 
   $: composeOutputObj = function(creditor, debtor, payment) {
-    const obj = { payment: payment.toFixed(2), ...debtor };
+    const obj = { payment: +(payment.toFixed(2)), ...debtor };
     if (creditor.hasOwnProperty("debtors")) {
       creditor.debtors.push(obj);
     } else {
