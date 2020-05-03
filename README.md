@@ -2,9 +2,9 @@
 go dutch 
 
 to do:
-- validate text input
-- clean after add
-- rounded money issue
+- ~~rounded money issue~~
+- ~~clean after add~~
+- ~~validate text input~~
 - ~~validate number input~~
 - ~~input placeholder color~~
 - ~~trash icon on person added~~
