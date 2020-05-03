@@ -57,14 +57,28 @@
   ]; */
 
   function add() {
-    let uid = payments.length + 1;
-    const payment = {
-      id: uid++,
-      done: false,
-      name: name,
-      pay: pay //make it number
-    };
-    payments = [payment, ...payments];
+    if (validate(name)) {
+      let uid = payments.length + 1;
+      const payment = {
+        id: uid++,
+        done: false,
+        name: name,
+        pay: isNaN(pay) || pay === "" ? 0 : parseFloat(pay)
+      };
+      payments = [payment, ...payments];
+      document.getElementById("myForm").reset();
+      name = "";
+      pay = "";
+    }
+  }
+
+  function validate(nombre) {
+    if (nombre === "") {
+      document.form.name.focus();
+      return false;
+    } else {
+      return true;
+    }
   }
 
   function remove(payment) {
@@ -93,8 +107,8 @@
 
   $: arrangeInitialConditions = function(output) {
     let payers = payments.filter(t => t.done);
-    output.total = payers.reduce((acc, curr) => acc + (curr.pay || 0), 0);
-    output.individualPayment = Math.round(output.total / payers.length);
+    output.total = payers.reduce((acc, curr) => acc + +(curr.pay || 0).toFixed(2), 0);
+    output.individualPayment = +(output.total / payers.length).toFixed(2);
     return payers.map(payment => {
       return {
         ...payment, //spread all props to new object except the one you need to change
@@ -120,7 +134,7 @@
   };
 
   $: composeOutputObj = function(creditor, debtor, payment) {
-    const obj = { payment: Math.round(payment), ...debtor };
+    const obj = { payment: payment.toFixed(2), ...debtor };
     if (creditor.hasOwnProperty("debtors")) {
       creditor.debtors.push(obj);
     } else {
@@ -137,6 +151,10 @@
     padding: 10px;
     color: white;
     font-size: 22px;
+  }
+
+  ::placeholder {
+    opacity: 0.7;
   }
 
   input[type="checkbox"] {
@@ -202,11 +220,13 @@
 </style>
 
 <div class="board">
-  <input type="text" placeholder="Nombre" bind:value={name} />
-  <input type="number" placeholder="¿cuánto gastó?" bind:value={pay} />
-  <button on:click={add}>
-    <span>Agregar al listado</span>
-  </button>
+  <form name="form" id="myForm">
+    <input name="name" type="text" placeholder="Nombre" bind:value={name} />
+    <input type="number" placeholder="¿cuánto gastó?" bind:value={pay} />
+    <button on:click|preventDefault={add}>
+      <span>Agregar al listado</span>
+    </button>
+  </form>
 </div>
 
 <div class="lists">
