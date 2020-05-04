@@ -2,6 +2,8 @@
 go dutch 
 
 to do:
+- reorder items by drag n drop
+- ~~singular and plural debtors output~~
 - ~~rounded money issue~~
 - ~~clean after add~~
 - ~~validate text input~~
