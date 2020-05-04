@@ -52,7 +52,8 @@
     <div>
       A
       <em>{item.name}</em>
-      {item.debtors.length === 1 ? 'le debe pagar' : 'le deben pagar'}
+      <!--{item.debtors.length === 1 ? 'le debe pagar' : 'le deben pagar'}-->
+      le debe{item.debtors.length === 1 ? '' : 'n'} pagar
     </div>
     {#each item.debtors as d}
       <div class="debtors">
